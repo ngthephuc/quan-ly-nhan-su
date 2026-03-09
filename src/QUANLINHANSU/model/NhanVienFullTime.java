@@ -27,4 +27,5 @@ public class NhanVienFullTime extends NhanVien {
                 "luongCoBan=" + luongCoBan +
                 '}';
     }
+    //alooo
 }
