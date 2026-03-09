@@ -22,6 +22,11 @@ public class TruongPhong extends NhanVienFullTime {
                 "troCapChucVu=" + troCapChucVu +
                 '}';
     }
+
+    @Override
+    public void hienThi() {
+        super.hienThi();
+    }
 }
 
 
