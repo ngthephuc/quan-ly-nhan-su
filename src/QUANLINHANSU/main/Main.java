@@ -1,4 +1,6 @@
 package QUANLINHANSU.main;
+
+import QUANLINHANSU.database.DBConnection;
 import QUANLINHANSU.model.NhanVien;
 import QUANLINHANSU.model.NhanVienFullTime;
 import QUANLINHANSU.model.NhanVienPartTime;
@@ -28,6 +30,7 @@ public class Main {
         }else{
             System.out.println("Khong tim thay");
         }
+        DBConnection.getConnection();
 
     }
 }
