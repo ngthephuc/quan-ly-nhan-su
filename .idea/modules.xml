@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BTL.iml" filepath="$PROJECT_DIR$/BTL.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BTLjava.iml" filepath="$PROJECT_DIR$/BTLjava.iml" />
     </modules>
   </component>
 </project>

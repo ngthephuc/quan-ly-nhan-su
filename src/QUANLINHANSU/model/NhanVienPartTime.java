@@ -14,4 +14,21 @@ public class NhanVienPartTime extends NhanVien{
         double luong = gioLam * luongGio;
         System.out.println(maNV + " - " + tenNV + " - PartTime - " + luong);
     }
+
+    public int getGioLam() {
+        return gioLam;
+    }
+
+    public void setGioLam(int gioLam) {
+        this.gioLam = gioLam;
+    }
+
+    @Override
+    public String toString() {
+        return "NhanVienPartTime{" +
+                "gioLam=" + gioLam +
+                ", luongGio=" + luongGio +
+                '}';
+    }
+
 }

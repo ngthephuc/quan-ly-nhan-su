@@ -36,4 +36,6 @@ public class PhongBan {
     public void setHeSoLuong(Double heSoLuong) {
         this.heSoLuong = heSoLuong;
     }
+
+
 }
