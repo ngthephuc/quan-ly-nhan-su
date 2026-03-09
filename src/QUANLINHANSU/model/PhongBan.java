@@ -37,5 +37,15 @@ public class PhongBan {
         this.heSoLuong = heSoLuong;
     }
 
+    @Override
+    public String toString() {
+        return "PhongBan{" +
+                "maPb='" + maPb + '\'' +
+                ", tenPb='" + tenPb + '\'' +
+                ", heSoLuong=" + heSoLuong +
+                '}';
+    }
 
+    public void hienThi() {
+    }
 }
