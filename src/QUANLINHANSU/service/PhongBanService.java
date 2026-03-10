@@ -1,69 +1,82 @@
 package QUANLINHANSU.service;
 
 import QUANLINHANSU.model.PhongBan;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class PhongBanService implements IManager<PhongBan>{
-    ArrayList<PhongBan> pb = new ArrayList<>();
+public class PhongBanService {
+    private EntityManagerFactory emf;
 
-
-    @Override
-    public void them(PhongBan PB) {
-        pb.add(PB);
-
+    public PhongBanService(EntityManagerFactory emf){
+        this.emf = emf;
     }
 
-    @Override
-    public void xoa(String id) {
-        for (int i = 0; i < pb.size(); i++) {
 
-            if (pb.get(i).getMaPb().equals(id)) {
-                pb.remove(i);
-                break;
-            }
 
+    public void hienThi(){
+
+        EntityManager em = emf.createEntityManager();
+
+        List<PhongBan> list =
+                em.createQuery("from PhongBan",PhongBan.class)
+                        .getResultList();
+
+        for(PhongBan pb : list){
+            System.out.println(pb);
         }
 
+        em.close();
     }
+    public void themPhongBan(PhongBan pb){
 
-    @Override
-    public void hienThi() {
-        for (PhongBan PB : pb) {
-            PB.hienThi();
+        EntityManager em = emf.createEntityManager();
+
+        PhongBan check = em.find(PhongBan.class, pb.getMaPb());
+
+        if(check != null){
+            System.out.println("Phong ban da ton tai!");
+            em.close();
+            return;
         }
 
+        em.getTransaction().begin();
+        em.persist(pb);
+        em.getTransaction().commit();
+
+        em.close();
     }
+    public void suaPhongBan(String maPb, String tenMoi, Double heSoMoi){
 
-    @Override
-    public PhongBan tim(String id) {
-        for (int i = 0; i < pb.size(); i++) {
-            if (pb.get(i).getMaPb().equals(id)) {
-                return pb.get(i);
-            }
+        EntityManager em = emf.createEntityManager();
 
-        }
-        return null;
-    }
+        em.getTransaction().begin();
 
-    @Override
-    public void sua(String id, PhongBan phongBan) {
-        for (int i = 0; i < pb.size(); i++) {
+        PhongBan pb = em.find(PhongBan.class, maPb);
 
-            if (pb.get(i).getMaPb().equals(id)) {
-
-                pb.get(i).setMaPb(phongBan.getMaPb());
-                pb.get(i).setTenPb(phongBan.getTenPb());
-                pb.get(i).setHeSoLuong(phongBan.getHeSoLuong());
-
-                break;
-            }
-
+        if(pb != null){
+            pb.setTenPb(tenMoi);
+            pb.setHeSoLuong(heSoMoi);
         }
 
+        em.getTransaction().commit();
+        em.close();
     }
+    public void xoaPhongBan(String maPb){
 
+        EntityManager em = emf.createEntityManager();
 
+        em.getTransaction().begin();
 
+        PhongBan pb = em.find(PhongBan.class, maPb);
 
+        if(pb != null){
+            em.remove(pb);
+        }
+
+        em.getTransaction().commit();
+        em.close();
+    }
 }

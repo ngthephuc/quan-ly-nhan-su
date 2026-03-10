@@ -1,20 +1,32 @@
 package QUANLINHANSU.model;
 
+import jakarta.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "ChucVu")
 public class ChucVu {
+
+    @Id
+    @Column(name = "MaCV")
     private String maCV;
+
+    @Column(name = "TenCV")
     private String tenCV;
+
+    @Column(name = "PhuCap")
     private Double phuCap;
 
+    @OneToMany(mappedBy = "chucVu")
     private List<BoNhiem> danhSachBoNhiem;
 
+    public ChucVu() {
+    }
 
-    public ChucVu(String maCV, String tenCV, Double phuCap, List<BoNhiem> danhSachBoNhiem) {
+    public ChucVu(String maCV, String tenCV, Double phuCap) {
         this.maCV = maCV;
         this.tenCV = tenCV;
         this.phuCap = phuCap;
-        this.danhSachBoNhiem = danhSachBoNhiem;
     }
 
     public String getMaCV() {
@@ -47,18 +59,5 @@ public class ChucVu {
 
     public void setDanhSachBoNhiem(List<BoNhiem> danhSachBoNhiem) {
         this.danhSachBoNhiem = danhSachBoNhiem;
-    }
-
-    @Override
-    public String toString() {
-        return "ChucVu{" +
-                "maCV='" + maCV + '\'' +
-                ", tenCV='" + tenCV + '\'' +
-                ", phuCap=" + phuCap +
-                ", danhSachBoNhiem=" + danhSachBoNhiem +
-                '}';
-    }
-
-    public void hienThi() {
     }
 }

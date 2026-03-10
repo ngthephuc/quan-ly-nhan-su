@@ -1,14 +1,33 @@
 package QUANLINHANSU.model;
 
+import jakarta.persistence.*;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "DuAn")
 public class Du_An {
+
+    @Id
+    @Column(name = "MaDA")
     private String maDA;
+
+    @Column(name = "TenDA")
     private String tenDA;
+
+    @Column(name = "KinhPhi")
     private double kinhPhi;
-    private String ngayBatDau;
-    private String ngayKetThuc;
+
+    @Column(name = "NgayBatDau")
+    private LocalDate ngayBatDau;
+
+    @Column(name = "NgayKetThuc")
+    private LocalDate ngayKetThuc;
+
+    public Du_An(String p1, String cHIEN, int i, int i1, LocalDate localDate, LocalDate date) {
+    }
 
     public Du_An(String maDA, String tenDA, double kinhPhi,
-                String ngayBatDau, String ngayKetThuc) {
+                 LocalDate ngayBatDau, LocalDate ngayKetThuc) {
         this.maDA = maDA;
         this.tenDA = tenDA;
         this.kinhPhi = kinhPhi;
@@ -40,30 +59,19 @@ public class Du_An {
         this.kinhPhi = kinhPhi;
     }
 
-    public String getNgayBatDau() {
+    public LocalDate getNgayBatDau() {
         return ngayBatDau;
     }
 
-    public void setNgayBatDau(String ngayBatDau) {
+    public void setNgayBatDau(LocalDate ngayBatDau) {
         this.ngayBatDau = ngayBatDau;
     }
 
-    public String getNgayKetThuc() {
+    public LocalDate getNgayKetThuc() {
         return ngayKetThuc;
     }
 
-    public void setNgayKetThuc(String ngayKetThuc) {
+    public void setNgayKetThuc(LocalDate ngayKetThuc) {
         this.ngayKetThuc = ngayKetThuc;
-    }
-
-    @Override
-    public String toString() {
-        return "DuAn{" +
-                "maDA='" + maDA + '\'' +
-                ", tenDA='" + tenDA + '\'' +
-                ", kinhPhi=" + kinhPhi +
-                ", ngayBatDau='" + ngayBatDau + '\'' +
-                ", ngayKetThuc='" + ngayKetThuc + '\'' +
-                '}';
     }
 }

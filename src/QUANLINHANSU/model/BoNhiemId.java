@@ -1,13 +1,21 @@
 package QUANLINHANSU.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Embeddable
 public class BoNhiemId implements Serializable {
 
+    @Column(name = "MaNV")
     private String maNV;
+
+    @Column(name = "MaCV")
     private String maCV;
+
+    @Column(name = "TuNgay")
     private LocalDate tuNgay;
 
     public BoNhiemId() {}
@@ -18,19 +26,30 @@ public class BoNhiemId implements Serializable {
         this.tuNgay = tuNgay;
     }
 
+    public String getMaNV() {
+        return maNV;
+    }
 
-    // equals + hashCode
+    public String getMaCV() {
+        return maCV;
+    }
+
+    public LocalDate getTuNgay() {
+        return tuNgay;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        BoNhiemId boNhiemId = (BoNhiemId) o;
-        return Objects.equals(maNV, boNhiemId.maNV) && Objects.equals(maCV, boNhiemId.maCV) && Objects.equals(tuNgay, boNhiemId.tuNgay);
+        if (this == o) return true;
+        if (!(o instanceof BoNhiemId)) return false;
+        BoNhiemId that = (BoNhiemId) o;
+        return Objects.equals(maNV, that.maNV) &&
+                Objects.equals(maCV, that.maCV) &&
+                Objects.equals(tuNgay, that.tuNgay);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(maNV, maCV, tuNgay);
     }
-
-
 }

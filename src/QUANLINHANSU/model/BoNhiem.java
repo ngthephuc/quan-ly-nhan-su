@@ -1,20 +1,34 @@
 package QUANLINHANSU.model;
 
-
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "BoNhiem")
 public class BoNhiem {
 
+    @EmbeddedId
     private BoNhiemId id;
+
+    @ManyToOne
+    @MapsId("maNV")
+    @JoinColumn(name = "MaNV")
     private NhanVien nhanVien;
+
+    @ManyToOne
+    @MapsId("maCV")
+    @JoinColumn(name = "MaCV")
     private ChucVu chucVu;
+
     private LocalDate tuNgay;
     private LocalDate denNgay;
     private String quyetDinhSo;
 
-    // Constructors, Getters và Setters
+    public BoNhiem() {
+    }
 
-    public BoNhiem(BoNhiemId id,NhanVien nhanVien, ChucVu chucVu, LocalDate tuNgay, LocalDate denNgay, String quyetDinhSo) {
+    public BoNhiem(BoNhiemId id, NhanVien nhanVien, ChucVu chucVu,
+                   LocalDate tuNgay, LocalDate denNgay, String quyetDinhSo) {
         this.id = id;
         this.nhanVien = nhanVien;
         this.chucVu = chucVu;

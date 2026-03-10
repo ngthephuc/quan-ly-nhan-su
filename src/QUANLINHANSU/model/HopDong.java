@@ -1,23 +1,42 @@
 package QUANLINHANSU.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "HopDong")
 public class HopDong {
+
+    @Id
+    @Column(name = "MaHD")
     private String maHD;
+
+    @Column(name = "LoaiHD")
     private String loaiHD;
+
+    @Column(name = "NgayKi")
     private LocalDate ngayKi;
+
+    @Column(name = "NgayBatDau")
     private LocalDate ngayBatDau;
+
+    @Column(name = "NgayKetThuc")
     private LocalDate ngayKetThuc;
 
+    @Column(name = "LuongCoBan")
     private double luongCoBan;
 
+    @ManyToOne
+    @JoinColumn(name = "MaNV")
     private NhanVien nhanVien;
 
     public HopDong() {
     }
 
-    public HopDong(String maHD, String loaiHD, LocalDate ngayKi, LocalDate ngayBatDau, LocalDate ngayKetThuc, double luongCoBan, NhanVien nhanVien) {
+    public HopDong(String maHD, String loaiHD, LocalDate ngayKi,
+                   LocalDate ngayBatDau, LocalDate ngayKetThuc,
+                   double luongCoBan, NhanVien nhanVien) {
         this.maHD = maHD;
         this.loaiHD = loaiHD;
         this.ngayKi = ngayKi;
@@ -85,13 +104,14 @@ public class HopDong {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) return true;
+        if (!(o instanceof HopDong)) return false;
         HopDong hopDong = (HopDong) o;
-        return Double.compare(luongCoBan, hopDong.luongCoBan) == 0 && Objects.equals(maHD, hopDong.maHD) && Objects.equals(loaiHD, hopDong.loaiHD) && Objects.equals(ngayKi, hopDong.ngayKi) && Objects.equals(ngayBatDau, hopDong.ngayBatDau) && Objects.equals(ngayKetThuc, hopDong.ngayKetThuc) && Objects.equals(nhanVien, hopDong.nhanVien);
+        return Objects.equals(maHD, hopDong.maHD);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(maHD, loaiHD, ngayKi, ngayBatDau, ngayKetThuc, luongCoBan, nhanVien);
+        return Objects.hash(maHD);
     }
 }

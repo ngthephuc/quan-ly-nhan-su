@@ -1,10 +1,23 @@
 package QUANLINHANSU.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "PhongBan")
 public class PhongBan {
+
+    @Id
+    @Column(name = "MaPhongBan")
     private String maPb;
+
+    @Column(name = "TenPhongBan")
     private String tenPb;
+
+    @Column(name = "HeSoLuong")
     private Double heSoLuong;
 
+    public PhongBan() {
+    }
 
     public PhongBan(String maPb, String tenPb, Double heSoLuong) {
         this.maPb = maPb;
@@ -16,21 +29,20 @@ public class PhongBan {
         return maPb;
     }
 
-    public String getTenPb() {
-        return tenPb;
-    }
-
-    public Double getHeSoLuong() {
-        return heSoLuong;
-
-    }
-
     public void setMaPb(String maPb) {
         this.maPb = maPb;
     }
 
+    public String getTenPb() {
+        return tenPb;
+    }
+
     public void setTenPb(String tenPb) {
         this.tenPb = tenPb;
+    }
+
+    public Double getHeSoLuong() {
+        return heSoLuong;
     }
 
     public void setHeSoLuong(Double heSoLuong) {
@@ -44,8 +56,5 @@ public class PhongBan {
                 ", tenPb='" + tenPb + '\'' +
                 ", heSoLuong=" + heSoLuong +
                 '}';
-    }
-
-    public void hienThi() {
     }
 }

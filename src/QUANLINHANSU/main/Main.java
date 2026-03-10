@@ -1,39 +1,43 @@
-package QUANLINHANSU.main;
+import QUANLINHANSU.model.Du_An;
+import QUANLINHANSU.model.PhongBan;
+import QUANLINHANSU.service.DuAnService;
+import QUANLINHANSU.service.PhongBanService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
-import QUANLINHANSU.database.DBConnection;
-import QUANLINHANSU.model.NhanVien;
-
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
 
+        EntityManagerFactory emf =
+                Persistence.createEntityManagerFactory("QLNS");
 
-        try {
-            Connection conn = DBConnection.getConnection();
+        System.out.println("Ket noi thanh cong!");
 
-            String sql = "INSERT INTO NhanSu VALUES (?, ?, ?, ?, ?, ?)";
+        PhongBanService service = new PhongBanService(emf);
+        DuAnService da = new DuAnService(emf);
+        da.ThemDuAn(new Du_An("P1",
+                "CHIEN",
+                2000,
+                LocalDate.of(2025,6,9),
+                LocalDate.of(2025,7,10)));
+        service.themPhongBan(
+                new PhongBan("PB05","IT",2.5)
+        );
 
-            PreparedStatement ps = conn.prepareStatement(sql);
+        service.themPhongBan(
+                new PhongBan("PB04","Marketing",2.1)
+        );
 
-            ps.setString(1, "NV10");
-            ps.setString(2, "Nguyen Van A");
-            ps.setInt(3, 25);
-            ps.setString(4, "PB01");
-            ps.setString(5, "CV01");
-            ps.setString(6, "FullTime");
+        service.hienThi();
+        service.suaPhongBan("PB01","IT New",3.0);
+        service.suaPhongBan("PB04","Mảketing New",3.0);
 
-            ps.executeUpdate();
+        service.xoaPhongBan("PB05");
 
-            System.out.println("Them nhan vien thanh cong!");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        service.hienThi();
+        emf.close();
     }
 }
