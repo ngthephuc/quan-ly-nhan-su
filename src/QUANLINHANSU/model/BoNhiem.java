@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 public class BoNhiem {
 
+    private BoNhiemId id;
     private NhanVien nhanVien;
     private ChucVu chucVu;
     private LocalDate tuNgay;
@@ -13,12 +14,21 @@ public class BoNhiem {
 
     // Constructors, Getters và Setters
 
-    public BoNhiem(NhanVien nhanVien, ChucVu chucVu, LocalDate tuNgay, LocalDate denNgay, String quyetDinhSo) {
+    public BoNhiem(BoNhiemId id,NhanVien nhanVien, ChucVu chucVu, LocalDate tuNgay, LocalDate denNgay, String quyetDinhSo) {
+        this.id = id;
         this.nhanVien = nhanVien;
         this.chucVu = chucVu;
         this.tuNgay = tuNgay;
         this.denNgay = denNgay;
         this.quyetDinhSo = quyetDinhSo;
+    }
+
+    public BoNhiemId getId() {
+        return id;
+    }
+
+    public void setId(BoNhiemId id) {
+        this.id = id;
     }
 
     public NhanVien getNhanVien() {
