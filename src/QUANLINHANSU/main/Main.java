@@ -5,6 +5,7 @@ import QUANLINHANSU.model.NhanVien;
 
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -15,19 +16,20 @@ public class Main {
         try {
             Connection conn = DBConnection.getConnection();
 
-            String sql = "SELECT * FROM NhanSu";
+            String sql = "INSERT INTO NhanSu VALUES (?, ?, ?, ?, ?, ?)";
 
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
+            PreparedStatement ps = conn.prepareStatement(sql);
 
-            while (rs.next()) {
-                System.out.println(
-                        rs.getString("MaNV") + " - " +
-                                rs.getString("TenNV") + " - " +
-                                rs.getInt("Tuoi") + " - "
+            ps.setString(1, "NV10");
+            ps.setString(2, "Nguyen Van A");
+            ps.setInt(3, 25);
+            ps.setString(4, "PB01");
+            ps.setString(5, "CV01");
+            ps.setString(6, "FullTime");
 
-                );
-            }
+            ps.executeUpdate();
+
+            System.out.println("Them nhan vien thanh cong!");
 
         } catch (Exception e) {
             e.printStackTrace();
