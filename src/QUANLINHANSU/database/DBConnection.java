@@ -7,8 +7,13 @@ public class DBConnection {
     public static Connection getConnection() {
         try {
 
-            String url = "jdbc:sqlserver://localhost\\SQLEXPRESS;databaseName=QuanLiNhanSu;encrypt=true;trustServerCertificate=true;integratedSecurity=true";
-            Connection conn = DriverManager.getConnection(url);
+            Connection conn =
+                    DriverManager.getConnection(
+                            "jdbc:sqlserver://localhost:1433;databaseName=QuanLiNhanSu;encrypt=true;trustServerCertificate=true",
+                            "sa",
+                            "123456"
+                    );
+
 
 
 
