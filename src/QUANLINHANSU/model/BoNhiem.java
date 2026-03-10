@@ -8,17 +8,18 @@ public class BoNhiem {
     private BoNhiemId id;
     private NhanVien nhanVien;
     private ChucVu chucVu;
-    private LocalDate tuNgay;
     private LocalDate denNgay;
     private String quyetDinhSo;
 
     // Constructors, Getters và Setters
 
-    public BoNhiem(BoNhiemId id,NhanVien nhanVien, ChucVu chucVu, LocalDate tuNgay, LocalDate denNgay, String quyetDinhSo) {
+    public BoNhiem() {
+    }
+
+    public BoNhiem(BoNhiemId id, NhanVien nhanVien, ChucVu chucVu, LocalDate denNgay, String quyetDinhSo) {
         this.id = id;
         this.nhanVien = nhanVien;
         this.chucVu = chucVu;
-        this.tuNgay = tuNgay;
         this.denNgay = denNgay;
         this.quyetDinhSo = quyetDinhSo;
     }
@@ -48,11 +49,7 @@ public class BoNhiem {
     }
 
     public LocalDate getTuNgay() {
-        return tuNgay;
-    }
-
-    public void setTuNgay(LocalDate tuNgay) {
-        this.tuNgay = tuNgay;
+        return id != null ? id.getTuNgay() : null;
     }
 
     public LocalDate getDenNgay() {

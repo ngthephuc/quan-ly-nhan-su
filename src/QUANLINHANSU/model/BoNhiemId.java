@@ -17,7 +17,32 @@ public class BoNhiemId implements Serializable {
         this.maCV = maCV;
         this.tuNgay = tuNgay;
     }
+    //geter and setter
 
+
+    public String getMaNV() {
+        return maNV;
+    }
+
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
+    }
+
+    public String getMaCV() {
+        return maCV;
+    }
+
+    public void setMaCV(String maCV) {
+        this.maCV = maCV;
+    }
+
+    public LocalDate getTuNgay() {
+        return tuNgay;
+    }
+
+    public void setTuNgay(LocalDate tuNgay) {
+        this.tuNgay = tuNgay;
+    }
 
     // equals + hashCode
     @Override

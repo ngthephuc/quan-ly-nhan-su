@@ -6,6 +6,9 @@ public class PhongBan {
     private Double heSoLuong;
 
 
+    public PhongBan() {
+    }
+
     public PhongBan(String maPb, String tenPb, Double heSoLuong) {
         this.maPb = maPb;
         this.tenPb = tenPb;

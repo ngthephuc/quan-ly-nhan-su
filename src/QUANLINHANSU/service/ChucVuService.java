@@ -1,45 +1,26 @@
 package QUANLINHANSU.service;
 
 import QUANLINHANSU.model.ChucVu;
+import java.util.List;
 
-import java.util.ArrayList;
-
-public class ChucVuService implements IManager<ChucVu>{
-    ArrayList<ChucVu> cv = new ArrayList<>();
-    @Override
-    public void them(ChucVu chucVu) {
-        cv.add(chucVu);
-
+public class ChucVuService{
+    public void themChucVu(ChucVu cv){
+        // insert vào database
     }
 
-    @Override
-    public void xoa(String id) {
-        for (int i = 0; i < cv.size(); i++) {
-
-            if (cv.get(i).getMaCV().equals(id)) {
-                cv.remove(i);
-                break;
-            }
-
-        }
-
+    public void capNhatChucVu(ChucVu cv){
+        // update
     }
 
-    @Override
-    public void hienThi() {
-        for (ChucVu CV : cv){
-            CV.hienThi();
-        }
-
+    public void xoaChucVu(String maCV){
+        // delete
     }
 
-    @Override
-    public ChucVu tim(String id) {
+    public ChucVu timChucVu(String maCV){
         return null;
     }
 
-    @Override
-    public void sua(String id, ChucVu chucVu) {
-
+    public List<ChucVu> layDanhSachChucVu(){
+        return null;
     }
 }

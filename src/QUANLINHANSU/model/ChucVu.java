@@ -9,6 +9,8 @@ public class ChucVu {
 
     private List<BoNhiem> danhSachBoNhiem;
 
+    public ChucVu() {
+    }
 
     public ChucVu(String maCV, String tenCV, Double phuCap, List<BoNhiem> danhSachBoNhiem) {
         this.maCV = maCV;
@@ -55,7 +57,6 @@ public class ChucVu {
                 "maCV='" + maCV + '\'' +
                 ", tenCV='" + tenCV + '\'' +
                 ", phuCap=" + phuCap +
-                ", danhSachBoNhiem=" + danhSachBoNhiem +
                 '}';
     }
 
