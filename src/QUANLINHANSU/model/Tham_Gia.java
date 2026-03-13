@@ -1,41 +1,16 @@
 package QUANLINHANSU.model;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "ThamGia")
 public class Tham_Gia {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @ManyToOne
-    @JoinColumn(name = "MaNV")
     private NhanVien nhanVien;
-
-    @ManyToOne
-    @JoinColumn(name = "MaDA")
-    private Du_An duAn;
-
-    @Column(name = "VaiTro")
+    private String maDA;
     private String vaiTro;
-
-    @Column(name = "SoGio")
     private int soGio;
 
-    public Tham_Gia() {
-    }
-
-    public Tham_Gia(NhanVien nhanVien, Du_An duAn, String vaiTro, int soGio) {
+    public Tham_Gia(NhanVien nhanVien, String maDA, String vaiTro, int soGio) {
         this.nhanVien = nhanVien;
-        this.duAn = duAn;
+        this.maDA = maDA;
         this.vaiTro = vaiTro;
         this.soGio = soGio;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public NhanVien getNhanVien() {
@@ -46,12 +21,12 @@ public class Tham_Gia {
         this.nhanVien = nhanVien;
     }
 
-    public Du_An getDuAn() {
-        return duAn;
+    public String getMaDA() {
+        return maDA;
     }
 
-    public void setDuAn(Du_An duAn) {
-        this.duAn = duAn;
+    public void setMaDA(String maDA) {
+        this.maDA = maDA;
     }
 
     public String getVaiTro() {

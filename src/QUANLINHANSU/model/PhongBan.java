@@ -19,9 +19,6 @@ public class PhongBan {
     public PhongBan() {
     }
 
-    public PhongBan() {
-    }
-
     public PhongBan(String maPb, String tenPb, Double heSoLuong) {
         this.maPb = maPb;
         this.tenPb = tenPb;
