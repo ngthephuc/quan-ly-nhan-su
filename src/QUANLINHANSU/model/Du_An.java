@@ -1,12 +1,25 @@
 package QUANLINHANSU.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.time.LocalDate;
+@Entity
+@Table(name = "DuAn")
 
 public class Du_An {
+    @Id
+    @Column(name = "MaDuAn")
     private String maDA;
+    @Column(name = "TenDuAn")
     private String tenDA;
+    @Column(name = "KinhPhi")
     private double kinhPhi;
+    @Column(name = "Ngaybatdau")
     private LocalDate ngayBatDau;
+    @Column(name = "Ngayketthuc")
     private LocalDate ngayKetThuc;
 
     public Du_An() {
