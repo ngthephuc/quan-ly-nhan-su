@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
 
         EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("QLNS");
+                Persistence.createEntityManagerFactory("QuanLyNhanSuPU");
         System.out.println("Ket noi thanh cong!");
     }
 }
