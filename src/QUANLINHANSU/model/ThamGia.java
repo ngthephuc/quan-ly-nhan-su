@@ -1,10 +1,24 @@
 package QUANLINHANSU.model;
 
+import jakarta.persistence.*;
+
+@Entity
 public class ThamGia {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @ManyToOne
+    @JoinColumn(name = "MaNV")
     private NhanVien nhanVien;
+    @Column(name = "MaDA")
     private String maDA;
+    @Column(name = "VaiTro")
     private String vaiTro;
+    @Column(name = "SoGio")
     private int soGio;
+
+    public ThamGia() {
+    }
 
     public ThamGia(NhanVien nhanVien, String maDA, String vaiTro, int soGio) {
         this.nhanVien = nhanVien;
