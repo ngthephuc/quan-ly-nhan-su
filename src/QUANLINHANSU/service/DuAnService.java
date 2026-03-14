@@ -16,7 +16,7 @@ public class DuAnService {
 
     public  void Hienthi(){
         EntityManager em = emf.createEntityManager();
-        List<Du_An> ds = em.createQuery("from DUAN",Du_An.class).getResultList();
+        List<Du_An> ds = em.createQuery("from DUAN", Du_An.class).getResultList();
         for (Du_An DA : ds){
             System.out.println(DA);
         }

@@ -67,4 +67,14 @@ public class Cham_Cong {
     public void setGioRa(LocalTime gioRa) {
         this.gioRa = gioRa;
     }
+
+    @Override
+    public String toString() {
+        return "ChamCong{" +
+                "maNV='" + maNV + '\'' +
+                ", ngay='" + ngay + '\'' +
+                ", gioVao='" + gioVao + '\'' +
+                ", gioRa='" + gioRa + '\'' +
+                '}';
+    }
 }

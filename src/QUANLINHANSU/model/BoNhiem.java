@@ -4,24 +4,25 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "BoNhiem")
 public class BoNhiem {
 
     @EmbeddedId
     private BoNhiemId id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("maNV")
     @JoinColumn(name = "MaNV")
     private NhanVien nhanVien;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("maCV")
     @JoinColumn(name = "MaCV")
     private ChucVu chucVu;
 
-    private LocalDate tuNgay;
+    @Column(name = "DenNgay")
     private LocalDate denNgay;
+
+    @Column(name = "QuyetDinhSo")
     private String quyetDinhSo;
 
     public BoNhiem() {
@@ -32,7 +33,6 @@ public class BoNhiem {
         this.id = id;
         this.nhanVien = nhanVien;
         this.chucVu = chucVu;
-        this.tuNgay = tuNgay;
         this.denNgay = denNgay;
         this.quyetDinhSo = quyetDinhSo;
     }
@@ -59,14 +59,6 @@ public class BoNhiem {
 
     public void setChucVu(ChucVu chucVu) {
         this.chucVu = chucVu;
-    }
-
-    public LocalDate getTuNgay() {
-        return tuNgay;
-    }
-
-    public void setTuNgay(LocalDate tuNgay) {
-        this.tuNgay = tuNgay;
     }
 
     public LocalDate getDenNgay() {

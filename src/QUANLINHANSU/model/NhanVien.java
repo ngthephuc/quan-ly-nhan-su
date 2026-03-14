@@ -1,20 +1,49 @@
 package QUANLINHANSU.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
-
+@Entity
 public class NhanVien {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MaNV")
     private String maNV;
+
+    @Column(name = "HoTen")
     private String hoTen;
+
+    @Column(name = "NgaySinh")
     private LocalDate ngaySinh;
+
+    @Column(name = "GioiTinh")
     private String gioiTinh;
+
+    @Column(name = "CCCD")
     private String cccd;
+
+    @Column(name = "DiaChi")
     private String diaChi;
+
+    @Column(name = "Email")
     private String email;
+
+    @Column(name = "SDT")
     private String sdt;
+
+    @Column(name = "NgayVaoLam")
     private LocalDate ngayVaoLam;
+
+    @Column(name = "TrangThai")
     private String trangThai;
+
+    @ManyToOne
+    @JoinColumn(name = "MaPhongBan")
     private PhongBan phongBan;
+
+    @OneToMany(mappedBy = "nhanVien")
+    private List<BoNhiem> danhSachBoNhiem;
     public NhanVien() {
     }
 
@@ -119,6 +148,14 @@ public class NhanVien {
 
     public void setPhongBan(PhongBan phongBan) {
         this.phongBan = phongBan;
+    }
+
+    public List<BoNhiem> getDanhSachBoNhiem() {
+        return danhSachBoNhiem;
+    }
+
+    public void setDanhSachBoNhiem(List<BoNhiem> danhSachBoNhiem) {
+        this.danhSachBoNhiem = danhSachBoNhiem;
     }
 
     @Override

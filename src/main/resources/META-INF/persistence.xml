@@ -1,44 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             version="3.0"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
-             https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+             https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
 
-    <persistence-unit name="QLNS">
+    <persistence-unit name="QuanLyNhanSuPU" transaction-type="RESOURCE_LOCAL">
 
-        <!-- Cho phép Hibernate tự quét toàn bộ Entity -->
-        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <!-- Hibernate làm JPA provider -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Khai báo tất cả Entity -->
+        <class>QUANLINHANSU.model.NhanVien</class>
+        <class>QUANLINHANSU.model.PhongBan</class>
+        <class>QUANLINHANSU.model.ChucVu</class>
+        <class>QUANLINHANSU.model.BoNhiem</class>
+        <class>QUANLINHANSU.model.HopDong</class>
+        <class>QUANLINHANSU.model.Du_An</class>
+        <class>QUANLINHANSU.model.ThamGia</class>
+        <class>QUANLINHANSU.model.Cham_Cong</class>
 
         <properties>
 
-            <!-- JDBC -->
+            <!-- ====================== KẾT NỐI SQL SERVER ====================== -->
             <property name="jakarta.persistence.jdbc.driver"
                       value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:sqlserver://localhost:1433;databaseName=QuanLiNhanVien;encrypt=false"/>
+                      value="jdbc:sqlserver://localhost:1433;databaseName=QuanLyNhanSu;encrypt=true;trustServerCertificate=true"/>
+            <property name="jakarta.persistence.jdbc.user"     value="sa"/>
+            <property name="jakarta.persistence.jdbc.password" value=""/>
 
-            <property name="jakarta.persistence.jdbc.user"
-                      value="sa"/>
+            <!-- ====================== HIBERNATE SETTINGS ====================== -->
 
-            <property name="jakarta.persistence.jdbc.password"
-                      value="123456"/>
-
-            <!-- Hibernate -->
+            <!-- Dialect cho SQL Server -->
             <property name="hibernate.dialect"
                       value="org.hibernate.dialect.SQLServerDialect"/>
+            <!--
+                hibernate.hbm2ddl.auto:
+                  - create       : Xóa & tạo lại bảng mỗi lần chạy (chỉ dùng khi dev)
+                  - create-drop  : Tạo khi start, xóa khi stop
+                  - update       : Tự cập nhật schema (dùng trong dev)
+                  - validate     : Chỉ kiểm tra schema, không sửa (dùng production)
+                  - none         : Không làm gì
+            -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
 
-            <!-- Tự tạo bảng -->
-            <property name="hibernate.hbm2ddl.auto"
-                      value="update"/>
-
-            <!-- Hiện câu SQL -->
-            <property name="hibernate.show_sql"
-                      value="true"/>
-
-            <property name="hibernate.format_sql"
-                      value="true"/>
-
+            <!-- In SQL ra console để debug (tắt khi production) -->
+            <property name="hibernate.show_sql"   value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
         </properties>
 
     </persistence-unit>
