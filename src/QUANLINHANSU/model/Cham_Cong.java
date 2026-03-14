@@ -1,16 +1,39 @@
 package QUANLINHANSU.model;
-
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+@Entity
+@Table(name = "ChamCong")
 public class Cham_Cong {
-    private String maNV;
-    private String ngay;
-    private String gioVao;
-    private String gioRa;
 
-    public Cham_Cong(String maNV, String ngay, String gioVao, String gioRa) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "MaNV")
+    private String maNV;
+
+    @Column(name = "Ngay")
+    private LocalDate ngay;
+
+    @Column(name = "GioVao")
+    private LocalTime gioVao;
+
+    @Column(name = "GioRa")
+    private LocalTime gioRa;
+
+    public Cham_Cong() {
+    }
+
+    public Cham_Cong(String maNV, LocalDate ngay, LocalTime gioVao, LocalTime gioRa) {
         this.maNV = maNV;
         this.ngay = ngay;
         this.gioVao = gioVao;
         this.gioRa = gioRa;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getMaNV() {
@@ -21,37 +44,27 @@ public class Cham_Cong {
         this.maNV = maNV;
     }
 
-    public String getNgay() {
+    public LocalDate getNgay() {
         return ngay;
     }
 
-    public void setNgay(String ngay) {
+    public void setNgay(LocalDate ngay) {
         this.ngay = ngay;
     }
 
-    public String getGioVao() {
+    public LocalTime getGioVao() {
         return gioVao;
     }
 
-    public void setGioVao(String gioVao) {
+    public void setGioVao(LocalTime gioVao) {
         this.gioVao = gioVao;
     }
 
-    public String getGioRa() {
+    public LocalTime getGioRa() {
         return gioRa;
     }
 
-    public void setGioRa(String gioRa) {
+    public void setGioRa(LocalTime gioRa) {
         this.gioRa = gioRa;
-    }
-
-    @Override
-    public String toString() {
-        return "ChamCong{" +
-                "maNV='" + maNV + '\'' +
-                ", ngay='" + ngay + '\'' +
-                ", gioVao='" + gioVao + '\'' +
-                ", gioRa='" + gioRa + '\'' +
-                '}';
     }
 }

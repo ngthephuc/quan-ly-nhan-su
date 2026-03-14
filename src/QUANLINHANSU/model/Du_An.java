@@ -1,18 +1,14 @@
 package QUANLINHANSU.model;
 
-import java.time.LocalDate;
-
 public class Du_An {
     private String maDA;
     private String tenDA;
     private double kinhPhi;
-    private LocalDate ngayBatDau;
-    private LocalDate ngayKetThuc;
+    private String ngayBatDau;
+    private String ngayKetThuc;
 
-    public Du_An() {
-    }
-
-    public Du_An(String maDA, String tenDA, double kinhPhi, LocalDate ngayBatDau, LocalDate ngayKetThuc) {
+    public Du_An(String maDA, String tenDA, double kinhPhi,
+                String ngayBatDau, String ngayKetThuc) {
         this.maDA = maDA;
         this.tenDA = tenDA;
         this.kinhPhi = kinhPhi;
@@ -44,19 +40,19 @@ public class Du_An {
         this.kinhPhi = kinhPhi;
     }
 
-    public LocalDate getNgayBatDau() {
+    public String getNgayBatDau() {
         return ngayBatDau;
     }
 
-    public void setNgayBatDau(LocalDate ngayBatDau) {
+    public void setNgayBatDau(String ngayBatDau) {
         this.ngayBatDau = ngayBatDau;
     }
 
-    public LocalDate getNgayKetThuc() {
+    public String getNgayKetThuc() {
         return ngayKetThuc;
     }
 
-    public void setNgayKetThuc(LocalDate ngayKetThuc) {
+    public void setNgayKetThuc(String ngayKetThuc) {
         this.ngayKetThuc = ngayKetThuc;
     }
 

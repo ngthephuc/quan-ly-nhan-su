@@ -1,24 +1,24 @@
 package QUANLINHANSU.model;
 
 public class Tham_Gia {
-    private NhanVien nhanVien;
+    private String maNV;
     private String maDA;
     private String vaiTro;
     private int soGio;
 
-    public Tham_Gia(NhanVien nhanVien, String maDA, String vaiTro, int soGio) {
-        this.nhanVien = nhanVien;
+    public Tham_Gia(String maNV, String maDA, String vaiTro, int soGio) {
+        this.maNV = maNV;
         this.maDA = maDA;
         this.vaiTro = vaiTro;
         this.soGio = soGio;
     }
 
-    public NhanVien getNhanVien() {
-        return nhanVien;
+    public String getMaNV() {
+        return maNV;
     }
 
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
     }
 
     public String getMaDA() {
