@@ -7,7 +7,6 @@ import java.util.Objects;
 @Entity
 public class NhanVien {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaNV")
     private String maNV;
 
@@ -172,7 +171,7 @@ public class NhanVien {
 
     @Override
     public String toString() {
-        return "NhanVien{" +
+         return "NhanVien{" +
                 "maNV='" + maNV + '\'' +
                 ", hoTen='" + hoTen + '\'' +
                 ", ngaySinh=" + ngaySinh +
