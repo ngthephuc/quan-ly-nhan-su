@@ -7,8 +7,12 @@ import java.util.List;
 
 public class NhanVienRepository extends BaseRepository<NhanVien> {
 
-    public NhanVienRepository(Class entityClass) {
+    public NhanVienRepository(Class<NhanVien> entityClass) {
         super(entityClass);
+    }
+
+    public NhanVienRepository() {
+        super(NhanVien.class);
     }
 
     public List<NhanVien> timTheoTen(EntityManager em, String hoTen) {
@@ -45,4 +49,5 @@ public class NhanVienRepository extends BaseRepository<NhanVien> {
                         "SELECT COUNT(nv) FROM NhanVien nv WHERE nv.trangThai = 'Đang làm'", Long.class)
                 .getSingleResult();
     }
+
 }
