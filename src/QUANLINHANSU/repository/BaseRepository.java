@@ -4,10 +4,10 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public abstract class  Baserepository <T>{
+public abstract class BaseRepository<T>{
     protected final Class<T> entityClass;
 
-    public Baserepository(Class<T> entityClass) {
+    public BaseRepository(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 

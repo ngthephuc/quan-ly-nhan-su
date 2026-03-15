@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class NhanVienRepository extends Baserepository {
+public class NhanVienRepository extends BaseRepository<NhanVien> {
 
     public NhanVienRepository(Class entityClass) {
         super(entityClass);
