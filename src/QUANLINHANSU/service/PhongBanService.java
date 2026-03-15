@@ -8,9 +8,10 @@ import jakarta.persistence.EntityTransaction;
 import java.util.List;
 
 public class PhongBanService {
+
     private final PhongBanRepository phongBanRepo = new PhongBanRepository();
 
-
+    // ===================== THÊM =====================
     public void themPhongBan(PhongBan phongBan) {
         // Validate trước khi thêm
         if (phongBan.getMaPb() == null || phongBan.getMaPb().isBlank())
@@ -29,7 +30,6 @@ public class PhongBanService {
 
             phongBanRepo.them(em, phongBan);
             tx.commit();
-            System.out.println("Thêm phòng ban thành công: " + phongBan.getTenPb());
 
         } catch (Exception e) {
             if (tx.isActive()) tx.rollback();
@@ -55,7 +55,6 @@ public class PhongBanService {
 
             phongBanRepo.capNhat(em, phongBan);
             tx.commit();
-            System.out.println("Cập nhật phòng ban thành công: " + phongBan.getTenPb());
 
         } catch (Exception e) {
             if (tx.isActive()) tx.rollback();
@@ -86,7 +85,6 @@ public class PhongBanService {
 
             phongBanRepo.xoa(em, maPb);
             tx.commit();
-            System.out.println("Xóa phòng ban thành công: " + maPb);
 
         } catch (Exception e) {
             if (tx.isActive()) tx.rollback();
@@ -99,29 +97,20 @@ public class PhongBanService {
     // ===================== TRUY VẤN (không cần transaction) =====================
 
     public PhongBan timTheoMa(String maPb) {
-        EntityManager em = JPAUtil.getEntityManager();
-        try {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
             return phongBanRepo.timById(em, maPb);
-        } finally {
-            em.close();
         }
     }
 
     public List<PhongBan> layTatCa() {
-        EntityManager em = JPAUtil.getEntityManager();
-        try {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
             return phongBanRepo.layDanhSachSapXep(em);
-        } finally {
-            em.close();
         }
     }
 
     public List<PhongBan> timTheoTen(String tenPb) {
-        EntityManager em = JPAUtil.getEntityManager();
-        try {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
             return phongBanRepo.timTheoTen(em, tenPb);
-        } finally {
-            em.close();
         }
     }
 }
