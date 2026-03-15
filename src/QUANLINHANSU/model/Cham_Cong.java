@@ -10,8 +10,9 @@ public class Cham_Cong {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "MaNV")
-    private String maNV;
+    @ManyToOne
+    @JoinColumn(name = "MaNV")
+    private NhanVien nhanVien;
 
     @Column(name = "Ngay")
     private LocalDate ngay;
@@ -25,8 +26,8 @@ public class Cham_Cong {
     public Cham_Cong() {
     }
 
-    public Cham_Cong(String maNV, LocalDate ngay, LocalTime gioVao, LocalTime gioRa) {
-        this.maNV = maNV;
+    public Cham_Cong(NhanVien nhanVien, LocalDate ngay, LocalTime gioVao, LocalTime gioRa) {
+        this.nhanVien = nhanVien;
         this.ngay = ngay;
         this.gioVao = gioVao;
         this.gioRa = gioRa;
@@ -36,12 +37,16 @@ public class Cham_Cong {
         return id;
     }
 
-    public String getMaNV() {
-        return maNV;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setMaNV(String maNV) {
-        this.maNV = maNV;
+    public NhanVien getNhanVien() {
+        return nhanVien;
+    }
+
+    public void setNhanVien(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
     }
 
     public LocalDate getNgay() {
@@ -71,7 +76,7 @@ public class Cham_Cong {
     @Override
     public String toString() {
         return "ChamCong{" +
-                "maNV='" + maNV + '\'' +
+                "maNV='" + nhanVien + '\'' +
                 ", ngay='" + ngay + '\'' +
                 ", gioVao='" + gioVao + '\'' +
                 ", gioRa='" + gioRa + '\'' +

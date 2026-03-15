@@ -13,7 +13,7 @@ public class Cham_CongService {
     private final Cham_CongRepository repo = new Cham_CongRepository();
 //    ====================Chấm Công===========
     public void ChamCong(Cham_Cong cc){
-        if(cc.getMaNV() ==null || cc.getMaNV().isBlank())
+        if(cc.getNhanVien() == null)
             throw new IllegalArgumentException("không quên không chấm công");
         EntityManager em = JPAUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -37,7 +37,7 @@ public class Cham_CongService {
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-            if(repo.timById(em , cc.getMaNV())==null)
+            if(repo.timById(em , cc.getNhanVien())==null)
                 throw new IllegalArgumentException("Chấm công không thành công");
             repo.capNhat(em,cc);
             tx.commit();

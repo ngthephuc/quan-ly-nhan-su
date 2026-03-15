@@ -28,8 +28,8 @@ public class BoNhiem {
     public BoNhiem() {
     }
 
-    public BoNhiem(BoNhiemId id, NhanVien nhanVien, ChucVu chucVu,
-                   LocalDate tuNgay, LocalDate denNgay, String quyetDinhSo) {
+    public BoNhiem(BoNhiemId id, NhanVien nhanVien, ChucVu chucVu
+                  , LocalDate denNgay, String quyetDinhSo) {
         this.id = id;
         this.nhanVien = nhanVien;
         this.chucVu = chucVu;

@@ -43,6 +43,9 @@ public class NhanVien {
 
     @OneToMany(mappedBy = "nhanVien")
     private List<BoNhiem> danhSachBoNhiem;
+
+    @OneToMany(mappedBy = "nhanVien")
+    private List<HopDong> hopDongs;
     public NhanVien() {
     }
 
@@ -155,6 +158,14 @@ public class NhanVien {
 
     public void setDanhSachBoNhiem(List<BoNhiem> danhSachBoNhiem) {
         this.danhSachBoNhiem = danhSachBoNhiem;
+    }
+
+    public List<HopDong> getHopDongs() {
+        return hopDongs;
+    }
+
+    public void setHopDongs(List<HopDong> hopDongs) {
+        this.hopDongs = hopDongs;
     }
 
     @Override

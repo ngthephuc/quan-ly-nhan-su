@@ -99,24 +99,16 @@ public class DuAnService {
     // ===================== TÌM THEO ID =====================
     public Du_An timDuAn(int id) {
 
-        EntityManager em = JPAUtil.getEntityManager();
-
-        try {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
             return repo.timById(em, id);
-        } finally {
-            em.close();
         }
     }
 
     // ===================== LẤY TẤT CẢ =====================
     public List<Du_An> layTatCaDuAn() {
 
-        EntityManager em = JPAUtil.getEntityManager();
-
-        try {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
             return repo.layTatCa(em);
-        } finally {
-            em.close();
         }
     }
 }
