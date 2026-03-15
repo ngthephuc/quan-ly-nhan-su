@@ -2,44 +2,84 @@ package QUANLINHANSU.service;
 
 import QUANLINHANSU.model.HopDong;
 import QUANLINHANSU.repository.HopDongRepository;
+import QUANLINHANSU.util.JPAUtil;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
 
 public class HopDongService {
-    private HopDongRepository repository;
 
-    public HopDongService() {
-        repository = new HopDongRepository();
-    }
+    private final HopDongRepository repo = new HopDongRepository();
 
     // thêm hợp đồng
     public void themHopDong(HopDong hd) {
 
-        if (hd.getNhanVien() == null) {
-            System.out.println("Nhan vien khong hop le");
-            return;
-        }
+        if (hd.getNhanVien() == null)
+            throw new IllegalArgumentException("Nhan vien khong hop le");
 
-        if (hd.getMaHD() == null || hd.getMaHD().isEmpty()) {
-            System.out.println("Ma hop dong khong hop le");
-            return;
-        }
+        if (hd.getMaHD() == null || hd.getMaHD().isBlank())
+            throw new IllegalArgumentException("Ma hop dong khong hop le");
 
-        repository.create(hd);
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+            repo.them(em, hd);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            throw new RuntimeException("Loi khi them hop dong", e);
+        } finally {
+            em.close();
+        }
     }
 
-    // lấy danh sách hợp đồng
+    // lấy danh sách
     public List<HopDong> layDanhSach() {
-        return repository.readAll();
+
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return repo.layTatCa(em);
+        } finally {
+            em.close();
+        }
     }
 
     // cập nhật
     public void capNhat(HopDong hd) {
-        repository.update(hd);
+
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+            repo.capNhat(em, hd);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            throw new RuntimeException("Loi khi cap nhat hop dong", e);
+        } finally {
+            em.close();
+        }
     }
 
-    // xoá
+    // xóa
     public void xoa(String maHD) {
-        repository.delete(maHD);
+
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+            repo.xoa(em, maHD);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            throw new RuntimeException("Loi khi xoa hop dong", e);
+        } finally {
+            em.close();
+        }
     }
 }

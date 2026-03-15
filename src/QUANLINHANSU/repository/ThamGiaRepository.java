@@ -1,58 +1,31 @@
 package QUANLINHANSU.repository;
 
 import QUANLINHANSU.model.ThamGia;
-import QUANLINHANSU.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class ThamGiaRepository {
-    public void create(ThamGia tg) {
+public class ThamGiaRepository extends BaseRepository<ThamGia> {
 
-        EntityManager em = JPAUtil.getEntityManager();
-
-        em.getTransaction().begin();
-        em.persist(tg);
-        em.getTransaction().commit();
-
-        em.close();
+    public ThamGiaRepository() {
+        super(ThamGia.class);
     }
 
-    public List<ThamGia> readAll() {
-
-        EntityManager em = JPAUtil.getEntityManager();
-
-        List<ThamGia> list =
-                em.createQuery("SELECT t FROM ThamGia t", ThamGia.class)
-                        .getResultList();
-
-        em.close();
-        return list;
+    // lấy theo dự án
+    public List<ThamGia> layTheoDuAn(EntityManager em, String maDA) {
+        return em.createQuery(
+                        "SELECT tg FROM ThamGia tg WHERE tg.maDA = :maDA",
+                        ThamGia.class)
+                .setParameter("maDA", maDA)
+                .getResultList();
     }
 
-    public void update(ThamGia tg) {
-
-        EntityManager em = JPAUtil.getEntityManager();
-
-        em.getTransaction().begin();
-        em.merge(tg);
-        em.getTransaction().commit();
-
-        em.close();
-    }
-
-    public void delete(int id) {
-
-        EntityManager em = JPAUtil.getEntityManager();
-
-        em.getTransaction().begin();
-
-        ThamGia tg = em.find(ThamGia.class, id);
-        if (tg != null) {
-            em.remove(tg);
-        }
-
-        em.getTransaction().commit();
-        em.close();
+    // lấy theo nhân viên
+    public List<ThamGia> layTheoNhanVien(EntityManager em, String maNV) {
+        return em.createQuery(
+                        "SELECT tg FROM ThamGia tg WHERE tg.nhanVien.maNV = :maNV",
+                        ThamGia.class)
+                .setParameter("maNV", maNV)
+                .getResultList();
     }
 }

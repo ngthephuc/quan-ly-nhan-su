@@ -2,46 +2,84 @@ package QUANLINHANSU.service;
 
 import QUANLINHANSU.model.ThamGia;
 import QUANLINHANSU.repository.ThamGiaRepository;
+import QUANLINHANSU.util.JPAUtil;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
 
 public class ThamGiaService {
-    private ThamGiaRepository thamGiaRepository;
 
-    public ThamGiaService() {
-        thamGiaRepository = new ThamGiaRepository();
-    }
+    private final ThamGiaRepository repo = new ThamGiaRepository();
 
-    // thêm nhân viên vào dự án
+    // thêm tham gia
     public void themThamGia(ThamGia tg) {
 
-        // kiểm tra dữ liệu
-        if (tg.getNhanVien() == null) {
-            System.out.println("Nhan vien khong hop le");
-            return;
-        }
+        if (tg.getNhanVien() == null)
+            throw new IllegalArgumentException("Nhan vien khong hop le");
 
-        if (tg.getMaDA() == null || tg.getMaDA().isEmpty()) {
-            System.out.println("Ma du an khong hop le");
-            return;
-        }
+        if (tg.getMaDA() == null || tg.getMaDA().isBlank())
+            throw new IllegalArgumentException("Ma du an khong hop le");
 
-        thamGiaRepository.create(tg);
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+            repo.them(em, tg);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            throw new RuntimeException("Loi khi them tham gia", e);
+        } finally {
+            em.close();
+        }
     }
 
-    // lấy danh sách tham gia
+    // lấy danh sách
     public List<ThamGia> layDanhSach() {
-        return thamGiaRepository.readAll();
+
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return repo.layTatCa(em);
+        } finally {
+            em.close();
+        }
     }
 
     // cập nhật
     public void capNhat(ThamGia tg) {
-        thamGiaRepository.update(tg);
+
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+            repo.capNhat(em, tg);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            throw new RuntimeException("Loi khi cap nhat tham gia", e);
+        } finally {
+            em.close();
+        }
     }
 
-    // xoá
+    // xóa
     public void xoa(int id) {
-        thamGiaRepository.delete(id);
-    }
 
+        EntityManager em = JPAUtil.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+            repo.xoa(em, id);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            throw new RuntimeException("Loi khi xoa tham gia", e);
+        } finally {
+            em.close();
+        }
+    }
 }
