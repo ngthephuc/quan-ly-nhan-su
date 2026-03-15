@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class PhongBanRepository extends Baserepository
+public class PhongBanRepository extends BaseRepository<PhongBan>
 {
     public PhongBanRepository(Class entityClass) {
         super(entityClass);
