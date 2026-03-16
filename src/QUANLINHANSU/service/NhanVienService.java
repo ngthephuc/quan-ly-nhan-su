@@ -11,7 +11,7 @@ import jakarta.persistence.EntityTransaction;
 import java.time.LocalDate;
 import java.util.List;
 
-public class NhanVienService {
+public class    NhanVienService {
 
     private final NhanVienRepository nhanVienRepo = new NhanVienRepository();
     private final PhongBanRepository phongBanRepo = new PhongBanRepository();
