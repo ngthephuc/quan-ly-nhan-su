@@ -21,7 +21,7 @@ public class ThamGiaService {
         if (tg.getNhanVien() == null || tg.getNhanVien().getMaNV() == null)
             throw new IllegalArgumentException("Nhân viên không hợp lệ!");
 
-        if (tg.getMaDA() == null || tg.getMaDA().isBlank())
+        if (tg.getDuAn() == null)
             throw new IllegalArgumentException("Mã dự án không hợp lệ!");
 
         EntityManager em = JPAUtil.getEntityManager();
@@ -37,14 +37,14 @@ public class ThamGiaService {
 
             // kiểm tra dự án tồn tại
             if (em.find(QUANLINHANSU.model.Du_An.class,
-                    tg.getMaDA()) == null)
+                    tg.getDuAn()) == null)
                 throw new IllegalArgumentException("Dự án không tồn tại!");
 
             // kiểm tra nhân viên đã tham gia dự án chưa
             List<ThamGia> list = repo.layTheoNhanVien(em, tg.getNhanVien().getMaNV());
 
             for (ThamGia item : list) {
-                if (item.getMaDA().equals(tg.getMaDA()))
+                if (item.getDuAn().equals(tg.getDuAn()))
                     throw new IllegalArgumentException("Nhân viên đã tham gia dự án này!");
             }
 

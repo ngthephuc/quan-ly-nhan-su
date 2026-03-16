@@ -7,22 +7,28 @@ public class ThamGia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @ManyToOne
     @JoinColumn(name = "MaNV")
     private NhanVien nhanVien;
-    @Column(name = "MaDA")
-    private String maDA;
+
+    @ManyToOne
+    @JoinColumn(name = "MaDA")
+    private Du_An duAn;
+
     @Column(name = "VaiTro")
     private String vaiTro;
+
     @Column(name = "SoGio")
     private int soGio;
+
 
     public ThamGia() {
     }
 
-    public ThamGia(NhanVien nhanVien, String maDA, String vaiTro, int soGio) {
+    public ThamGia(NhanVien nhanVien,Du_An duAn, String vaiTro, int soGio) {
         this.nhanVien = nhanVien;
-        this.maDA = maDA;
+        this.duAn = duAn;
         this.vaiTro = vaiTro;
         this.soGio = soGio;
     }
@@ -35,12 +41,12 @@ public class ThamGia {
         this.nhanVien = nhanVien;
     }
 
-    public String getMaDA() {
-        return maDA;
+    public Du_An getDuAn() {
+        return duAn;
     }
 
-    public void setMaDA(String maDA) {
-        this.maDA = maDA;
+    public void setDuAn(Du_An duAn) {
+        this.duAn = duAn;
     }
 
     public String getVaiTro() {

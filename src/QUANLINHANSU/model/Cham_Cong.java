@@ -1,21 +1,19 @@
 package QUANLINHANSU.model;
+
 import jakarta.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalTime;
+
 @Entity
 @Table(name = "ChamCong")
 public class Cham_Cong {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @EmbeddedId
+    private ChamCongId id;
 
     @ManyToOne
+    @MapsId("maNV")
     @JoinColumn(name = "MaNV")
     private NhanVien nhanVien;
-
-    @Column(name = "Ngay")
-    private LocalDate ngay;
 
     @Column(name = "GioVao")
     private LocalTime gioVao;
@@ -23,21 +21,20 @@ public class Cham_Cong {
     @Column(name = "GioRa")
     private LocalTime gioRa;
 
-    public Cham_Cong() {
-    }
+    public Cham_Cong() {}
 
-    public Cham_Cong(NhanVien nhanVien, LocalDate ngay, LocalTime gioVao, LocalTime gioRa) {
+    public Cham_Cong(ChamCongId id, NhanVien nhanVien, LocalTime gioVao, LocalTime gioRa) {
+        this.id = id;
         this.nhanVien = nhanVien;
-        this.ngay = ngay;
         this.gioVao = gioVao;
         this.gioRa = gioRa;
     }
 
-    public int getId() {
+    public ChamCongId getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(ChamCongId id) {
         this.id = id;
     }
 
@@ -47,14 +44,6 @@ public class Cham_Cong {
 
     public void setNhanVien(NhanVien nhanVien) {
         this.nhanVien = nhanVien;
-    }
-
-    public LocalDate getNgay() {
-        return ngay;
-    }
-
-    public void setNgay(LocalDate ngay) {
-        this.ngay = ngay;
     }
 
     public LocalTime getGioVao() {
@@ -71,15 +60,5 @@ public class Cham_Cong {
 
     public void setGioRa(LocalTime gioRa) {
         this.gioRa = gioRa;
-    }
-
-    @Override
-    public String toString() {
-        return "ChamCong{" +
-                "maNV='" + nhanVien + '\'' +
-                ", ngay='" + ngay + '\'' +
-                ", gioVao='" + gioVao + '\'' +
-                ", gioRa='" + gioRa + '\'' +
-                '}';
     }
 }

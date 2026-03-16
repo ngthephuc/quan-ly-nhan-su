@@ -1,6 +1,7 @@
 package QUANLINHANSU.service;
 
 import QUANLINHANSU.model.Cham_Cong;
+import QUANLINHANSU.model.ChamCongId;
 import QUANLINHANSU.model.NhanVien;
 import QUANLINHANSU.repository.Cham_CongRepository;
 import QUANLINHANSU.util.JPAUtil;
@@ -8,7 +9,6 @@ import QUANLINHANSU.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class Cham_CongService {
@@ -24,8 +24,8 @@ public class Cham_CongService {
         if (cc.getNhanVien() == null || cc.getNhanVien().getMaNV() == null)
             throw new IllegalArgumentException("Nhân viên không hợp lệ!");
 
-        if (cc.getNgay() == null)
-            throw new IllegalArgumentException("Ngày chấm công không hợp lệ!");
+        if (cc.getId() == null)
+            throw new IllegalArgumentException("ID chấm công không hợp lệ!");
 
         EntityManager em = JPAUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -57,7 +57,7 @@ public class Cham_CongService {
     // ==================== CẬP NHẬT ====================
     public void capNhatChamCong(Cham_Cong cc) {
 
-        if (cc == null || cc.getId() <= 0)
+        if (cc == null || cc.getId() == null)
             throw new IllegalArgumentException("Dữ liệu chấm công không hợp lệ!");
 
         EntityManager em = JPAUtil.getEntityManager();
@@ -87,9 +87,9 @@ public class Cham_CongService {
     }
 
     // ==================== XÓA ====================
-    public void xoaChamCong(int id) {
+    public void xoaChamCong(ChamCongId id) {
 
-        if (id <= 0)
+        if (id == null)
             throw new IllegalArgumentException("ID không hợp lệ!");
 
         EntityManager em = JPAUtil.getEntityManager();
@@ -119,7 +119,7 @@ public class Cham_CongService {
     }
 
     // ==================== TÌM THEO ID ====================
-    public Cham_Cong timChamCong(int id) {
+    public Cham_Cong timChamCong(ChamCongId id) {
 
         EntityManager em = JPAUtil.getEntityManager();
 

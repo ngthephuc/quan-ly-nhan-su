@@ -1,11 +1,10 @@
 package QUANLINHANSU.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
+
 @Entity
 @Table(name = "DuAn")
 
@@ -21,7 +20,8 @@ public class Du_An {
     private LocalDate ngayBatDau;
     @Column(name = "Ngayketthuc")
     private LocalDate ngayKetThuc;
-
+    @OneToMany(mappedBy = "duAn")
+    private List<ThamGia> danhSachThamGia;
     public Du_An() {
     }
 
@@ -35,6 +35,14 @@ public class Du_An {
 
     public String getMaDA() {
         return maDA;
+    }
+
+    public List<ThamGia> getDanhSachThamGia() {
+        return danhSachThamGia;
+    }
+
+    public void setDanhSachThamGia(List<ThamGia> danhSachThamGia) {
+        this.danhSachThamGia = danhSachThamGia;
     }
 
     public void setMaDA(String maDA) {
