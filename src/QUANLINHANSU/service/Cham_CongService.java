@@ -9,6 +9,7 @@ import QUANLINHANSU.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Cham_CongService {
@@ -133,20 +134,24 @@ public class Cham_CongService {
 
         }
     }
-
-    // ==================== LẤY TẤT CẢ ====================
-    public List<Cham_Cong> layTatCaChamCong() {
-
+    // dem tong ngay cong
+    public long demNgayCong(String maNV, int thang, int nam) {
         EntityManager em = JPAUtil.getEntityManager();
-
         try {
-
-            return repo.layTatCa(em);
-
+            return repo.demNgayCong(em, maNV, thang, nam);
         } finally {
-
             em.close();
-
         }
     }
+
+    public List<Cham_Cong> layTheoNgay(LocalDate ngay) {
+        EntityManager em = JPAUtil.getEntityManager();
+        try {
+            return repo.layTheoNgay(em, ngay);
+        } finally {
+            em.close();
+        }
+    }
+
+
 }
