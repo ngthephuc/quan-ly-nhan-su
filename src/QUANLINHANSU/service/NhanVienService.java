@@ -18,7 +18,7 @@ public class    NhanVienService {
     private final HopDongRepository hopDongRepo = new HopDongRepository();
 
     // thêm nhân viên
-    public void themNhanVienDayDu(NhanVien nhanVien, HopDong hopDong) {
+    public void themNhanVien(NhanVien nhanVien) {
 
         //  Validate nhân viên
         if (nhanVien.getMaNV() == null || nhanVien.getMaNV().isBlank())
@@ -42,18 +42,6 @@ public class    NhanVienService {
         if (nhanVien.getPhongBan() == null)
             throw new IllegalArgumentException("Phòng ban không được để trống!");
 
-        // Validate hợp đồng
-        if (hopDong.getMaHD() == null || hopDong.getMaHD().isBlank())
-            throw new IllegalArgumentException("Mã hợp đồng không được để trống!");
-        if (hopDong.getLoaiHD() == null || hopDong.getLoaiHD().isBlank())
-            throw new IllegalArgumentException("Loại hợp đồng không được để trống!");
-        if (hopDong.getNgayBatDau() == null)
-            throw new IllegalArgumentException("Ngày bắt đầu hợp đồng không được để trống!");
-        if (hopDong.getNgayKetThuc() != null
-                && hopDong.getNgayKetThuc().isBefore(hopDong.getNgayBatDau()))
-            throw new IllegalArgumentException("Ngày kết thúc hợp đồng phải sau ngày bắt đầu!");
-        if (hopDong.getLuongCoBan() <= 0)
-            throw new IllegalArgumentException("Lương cơ bản phải lớn hơn 0!");
 
         EntityManager em = JPAUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -66,13 +54,8 @@ public class    NhanVienService {
                 throw new IllegalArgumentException("CCCD '" + nhanVien.getCccd() + "' đã được đăng ký!");
             if (phongBanRepo.timById(em, nhanVien.getPhongBan().getMaPb()) == null)
                 throw new IllegalArgumentException("Phòng ban không tồn tại!");
-            if (hopDongRepo.timById(em, hopDong.getMaHD()) != null)
-                throw new IllegalArgumentException("Mã hợp đồng '" + hopDong.getMaHD() + "' đã tồn tại!");
 
-            // Gắn NV vào HĐ rồi lưu NV trước, HĐ sau (vì HĐ có FK tới NV)
-            hopDong.setNhanVien(nhanVien);
             nhanVienRepo.them(em, nhanVien);
-            hopDongRepo.them(em, hopDong);
 
             tx.commit();
 
@@ -83,6 +66,8 @@ public class    NhanVienService {
             em.close();
         }
     }
+
+
 
     // ==================== CẬP NHẬT ====================
     public void capNhatNhanVien(NhanVien nhanVien) {

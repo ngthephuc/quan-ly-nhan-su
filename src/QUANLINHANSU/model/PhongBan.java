@@ -10,7 +10,7 @@ public class PhongBan {
     @Column(name = "MaPhongBan")
     private String maPb;
 
-    @Column(name = "TenPhongBan")
+    @Column(name = "TenPhongBan", columnDefinition = "NVARCHAR(255)")
     private String tenPb;
 
     @Column(name = "HeSoLuong")
