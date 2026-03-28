@@ -1,7 +1,5 @@
 package QUANLINHANSU.main;
 
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,12 +10,12 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
 
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/fxml/NhanVien.fxml")
+                getClass().getResource("/fxml/MainView.fxml")
         );
 
         Scene scene = new Scene(loader.load());
 
-        stage.setTitle("Test UI");
+        stage.setTitle("Test UIk");
         stage.setScene(scene);
         stage.show();
     }

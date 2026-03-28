@@ -7,10 +7,10 @@ import java.util.Objects;
 @Entity
 public class NhanVien {
     @Id
-    @Column(name = "MaNV")
+    @Column(name = "MaNV" ,columnDefinition = "NVARCHAR(255)")
     private String maNV;
 
-    @Column(name = "HoTen")
+    @Column(name = "HoTen" , columnDefinition = "NVARCHAR(255)")
     private String hoTen;
 
     @Column(name = "NgaySinh")
@@ -22,13 +22,13 @@ public class NhanVien {
     @Column(name = "CCCD")
     private String cccd;
 
-    @Column(name = "DiaChi")
+    @Column(name = "DiaChi",columnDefinition = "NVARCHAR(255)")
     private String diaChi;
 
-    @Column(name = "Email")
+    @Column(name = "Email",columnDefinition = "NVARCHAR(255)")
     private String email;
 
-    @Column(name = "SDT")
+    @Column(name = "SDT" )
     private String sdt;
 
     @Column(name = "NgayVaoLam")
@@ -41,30 +41,44 @@ public class NhanVien {
     @JoinColumn(name = "MaPhongBan")
     private PhongBan phongBan;
 
+    @ManyToOne
+    @JoinColumn(name = "MaHD ")
+    private HopDong hopDong;
+
     @OneToMany(mappedBy = "nhanVien")
     private List<BoNhiem> danhSachBoNhiem;
 
-    @OneToMany(mappedBy = "nhanVien")
-    private List<HopDong> hopDongs;
+
     @OneToMany(mappedBy = "nhanVien")
     private List<ThamGia> danhSachThamGia;
+
+    @ManyToOne
+    @JoinColumn(name = "maChucVu")
+    private ChucVu chucVu;
+
+
+
     public NhanVien() {
     }
 
-    public NhanVien(String maNV, String hoTen, PhongBan phongBan, String trangThai, LocalDate ngayVaoLam, String email, String sdt, String diaChi, String cccd, String gioiTinh, LocalDate ngaySinh) {
+    public NhanVien(String maNV, String hoTen, List<ThamGia> danhSachThamGia, List<BoNhiem> danhSachBoNhiem, String trangThai, LocalDate ngayVaoLam, String sdt, String email, String diaChi, String cccd, String gioiTinh, LocalDate ngaySinh, PhongBan phongBan, HopDong hopDong,ChucVu chucVu) {
         this.maNV = maNV;
         this.hoTen = hoTen;
-        this.phongBan = phongBan;
+        this.danhSachThamGia = danhSachThamGia;
+        this.danhSachBoNhiem = danhSachBoNhiem;
         this.trangThai = trangThai;
         this.ngayVaoLam = ngayVaoLam;
-        this.email = email;
         this.sdt = sdt;
+        this.email = email;
         this.diaChi = diaChi;
         this.cccd = cccd;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
-    }
+        this.phongBan = phongBan;
+        this.hopDong = hopDong;
+        this.chucVu=chucVu;
 
+    }
 
     public String getMaNV() {
         return maNV;
@@ -154,6 +168,14 @@ public class NhanVien {
         this.phongBan = phongBan;
     }
 
+    public HopDong getHopDong() {
+        return hopDong;
+    }
+
+    public void setHopDong(HopDong hopDong) {
+        this.hopDong = hopDong;
+    }
+
     public List<BoNhiem> getDanhSachBoNhiem() {
         return danhSachBoNhiem;
     }
@@ -162,13 +184,23 @@ public class NhanVien {
         this.danhSachBoNhiem = danhSachBoNhiem;
     }
 
-    public List<HopDong> getHopDongs() {
-        return hopDongs;
+    public List<ThamGia> getDanhSachThamGia() {
+        return danhSachThamGia;
     }
 
-    public void setHopDongs(List<HopDong> hopDongs) {
-        this.hopDongs = hopDongs;
+    public void setDanhSachThamGia(List<ThamGia> danhSachThamGia) {
+        this.danhSachThamGia = danhSachThamGia;
     }
+
+    public ChucVu getChucVu() {
+        return chucVu;
+    }
+
+    public void setChucVu(ChucVu chucVu) {
+        this.chucVu = chucVu;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

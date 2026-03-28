@@ -12,7 +12,7 @@ public class Du_An {
     @Id
     @Column(name = "MaDuAn")
     private String maDA;
-    @Column(name = "TenDuAn")
+    @Column(name = "TenDuAn",columnDefinition = "NVARCHAR(255)")
     private String tenDA;
     @Column(name = "KinhPhi")
     private double kinhPhi;

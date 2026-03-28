@@ -11,7 +11,7 @@ public class ChucVu {
     @Column(name = "MaCV")
     private String maCV;
 
-    @Column(name = "TenCV")
+    @Column(name = "TenCV",columnDefinition = "NVARCHAR(255)")
     private String tenCV;
 
     @Column(name = "PhuCap")

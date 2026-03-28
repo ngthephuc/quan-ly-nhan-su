@@ -24,15 +24,8 @@ public class HopDongService {
         if (hd.getMaHD() == null || hd.getMaHD().isBlank())
             throw new IllegalArgumentException("Mã hợp đồng không hợp lệ!");
 
-        if (hd.getNhanVien() == null || hd.getNhanVien().getMaNV() == null)
-            throw new IllegalArgumentException("Nhân viên không hợp lệ!");
-
         if (hd.getLuongCoBan() <= 0)
             throw new IllegalArgumentException("Lương cơ bản phải > 0");
-
-        if (hd.getNgayBatDau() != null && hd.getNgayKetThuc() != null &&
-                hd.getNgayKetThuc().isBefore(hd.getNgayBatDau()))
-            throw new IllegalArgumentException("Ngày kết thúc phải sau ngày bắt đầu!");
 
         EntityManager em = JPAUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -46,9 +39,6 @@ public class HopDongService {
                 throw new IllegalArgumentException("Mã hợp đồng đã tồn tại!");
 
             // kiểm tra nhân viên tồn tại
-            if (em.find(NhanVien.class, hd.getNhanVien().getMaNV()) == null)
-                throw new IllegalArgumentException("Nhân viên không tồn tại!");
-
             repo.them(em, hd);
 
             tx.commit();
