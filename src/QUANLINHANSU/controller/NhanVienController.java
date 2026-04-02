@@ -44,6 +44,10 @@ public class NhanVienController implements Initializable {
     @FXML private ComboBox<PhongBan> cbPhongBan;
     @FXML private ComboBox<HopDong> cbHopDong;
 
+    // button nhanvien
+    @FXML private Button butXoaNV;
+    @FXML private Button butThemNV;
+
 
     private final NhanVienService nhanVienService = new NhanVienService();
     private final PhongBanService phongBanService = new PhongBanService();
@@ -74,11 +78,11 @@ public class NhanVienController implements Initializable {
                 new SimpleStringProperty(c.getValue().getTrangThai()));
         colPhongBan.setCellValueFactory(c -> {
             PhongBan pb = c.getValue().getPhongBan();
-            return new SimpleStringProperty(pb != null ? pb.getTenPb() : "");
+            return new SimpleStringProperty(pb != null ? pb.getTenPb() : "Chưa có");
         });
         colHopDong.setCellValueFactory(c -> {
             HopDong hd = c.getValue().getHopDong();
-            return new SimpleStringProperty(hd != null ? hd.getLoaiHD() : "");
+            return new SimpleStringProperty(hd != null ? hd.getLoaiHD() : "Chưa có");
         });
     }
 
@@ -164,6 +168,21 @@ public class NhanVienController implements Initializable {
                     .findFirst()
                     .ifPresent(cbPhongBan::setValue);
         }
+        // chọn đúng hoopwj đồng trong cômbobox
+        if( nv.getHopDong() != null){
+            cbHopDong.getItems().stream()
+                    .filter(hd -> hd.getMaHD().equals(nv.getHopDong().getMaHD()))
+                    .findFirst().ifPresent(cbHopDong::setValue);
+        }
+        // nhân viên đã nghỉ thì ko thể xóa đc tiếp , cx ko hther them
+        if ("Đã nghỉ".equals(nv.getTrangThai().trim())){
+            butXoaNV.setDisable(true);
+            butThemNV.setDisable(true);
+        }else{
+            butThemNV.setDisable(false);
+            butXoaNV.setDisable(false);
+        }
+
     }
 
     @FXML
@@ -232,6 +251,7 @@ public class NhanVienController implements Initializable {
         txtCccd.clear();
         dpNgayVaoLam.setValue(null);
         cbTrangThai.setValue(null);
+        cbHopDong.setValue(null);
         txtSdt.clear();
         txtDiaChi.clear();
         txtEmail.clear();
@@ -251,7 +271,6 @@ public class NhanVienController implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Lỗi", e.getMessage());
         }
     }
-
     // ===================== HELPER =====================
 
     /** Lấy dữ liệu từ form và tạo object NhanVien */
@@ -274,6 +293,7 @@ public class NhanVienController implements Initializable {
         nv.setDiaChi(txtDiaChi.getText().trim());
         nv.setEmail(txtEmail.getText().trim());
         nv.setPhongBan(cbPhongBan.getValue());
+        nv.setHopDong(cbHopDong.getValue());
 
         return nv;
     }

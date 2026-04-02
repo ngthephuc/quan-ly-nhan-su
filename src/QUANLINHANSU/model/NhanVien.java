@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 public class NhanVien {
     @Id
-    @Column(name = "MaNV" ,columnDefinition = "NVARCHAR(255)")
+    @Column(name = "MaNV" ,columnDefinition = "NVARCHAR(50)")
     private String maNV;
 
     @Column(name = "HoTen" , columnDefinition = "NVARCHAR(255)")
@@ -16,10 +16,10 @@ public class NhanVien {
     @Column(name = "NgaySinh")
     private LocalDate ngaySinh;
 
-    @Column(name = "GioiTinh")
+    @Column(name = "GioiTinh",columnDefinition = "NVARCHAR(255)")
     private String gioiTinh;
 
-    @Column(name = "CCCD")
+    @Column(name = "CCCD",columnDefinition = "NVARCHAR(255)")
     private String cccd;
 
     @Column(name = "DiaChi",columnDefinition = "NVARCHAR(255)")
@@ -28,21 +28,21 @@ public class NhanVien {
     @Column(name = "Email",columnDefinition = "NVARCHAR(255)")
     private String email;
 
-    @Column(name = "SDT" )
+    @Column(name = "SDT" ,columnDefinition = "NVARCHAR(255)")
     private String sdt;
 
     @Column(name = "NgayVaoLam")
     private LocalDate ngayVaoLam;
 
-    @Column(name = "TrangThai")
+    @Column(name = "TrangThai",columnDefinition = "NVARCHAR(255)")
     private String trangThai;
 
     @ManyToOne
-    @JoinColumn(name = "MaPhongBan")
+    @JoinColumn(name = "MaPhongBan",columnDefinition = "NVARCHAR(255)")
     private PhongBan phongBan;
 
     @ManyToOne
-    @JoinColumn(name = "MaHD")
+    @JoinColumn(name = "MaHD",columnDefinition = "NVARCHAR(255)")
     private HopDong hopDong;
 
     @OneToMany(mappedBy = "nhanVien")
@@ -52,26 +52,36 @@ public class NhanVien {
     @OneToMany(mappedBy = "nhanVien")
     private List<ThamGia> danhSachThamGia;
 
-
+    @OneToMany(mappedBy = "nhanVien")
+    private List<Cham_Cong> danhSachChamCong;
 
     public NhanVien() {
     }
 
-    public NhanVien(String maNV, String hoTen, List<ThamGia> danhSachThamGia, List<BoNhiem> danhSachBoNhiem, String trangThai, LocalDate ngayVaoLam, String sdt, String email, String diaChi, String cccd, String gioiTinh, LocalDate ngaySinh, PhongBan phongBan, HopDong hopDong) {
+    public NhanVien(String maNV, String hoTen, LocalDate ngaySinh, String gioiTinh, String cccd, String diaChi, String email, String sdt, LocalDate ngayVaoLam, String trangThai, PhongBan phongBan, HopDong hopDong, List<BoNhiem> danhSachBoNhiem, List<ThamGia> danhSachThamGia, List<Cham_Cong> danhSachChamCong) {
         this.maNV = maNV;
         this.hoTen = hoTen;
-        this.danhSachThamGia = danhSachThamGia;
-        this.danhSachBoNhiem = danhSachBoNhiem;
-        this.trangThai = trangThai;
-        this.ngayVaoLam = ngayVaoLam;
-        this.sdt = sdt;
-        this.email = email;
-        this.diaChi = diaChi;
-        this.cccd = cccd;
-        this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
+        this.gioiTinh = gioiTinh;
+        this.cccd = cccd;
+        this.diaChi = diaChi;
+        this.email = email;
+        this.sdt = sdt;
+        this.ngayVaoLam = ngayVaoLam;
+        this.trangThai = trangThai;
         this.phongBan = phongBan;
         this.hopDong = hopDong;
+        this.danhSachBoNhiem = danhSachBoNhiem;
+        this.danhSachThamGia = danhSachThamGia;
+        this.danhSachChamCong = danhSachChamCong;
+    }
+
+    public List<Cham_Cong> getDanhSachChamCong() {
+        return danhSachChamCong;
+    }
+
+    public void setDanhSachChamCong(List<Cham_Cong> danhSachChamCong) {
+        this.danhSachChamCong = danhSachChamCong;
     }
 
     public String getMaNV() {

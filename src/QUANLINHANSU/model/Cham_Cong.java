@@ -12,7 +12,7 @@ public class Cham_Cong {
 
     @ManyToOne
     @MapsId("maNV")
-    @JoinColumn(name = "MaNV")
+    @JoinColumn(name = "MaNV",columnDefinition = "NVARCHAR(50)" ,foreignKey = @ForeignKey(name = "FK_CHAMCONG_NHANVIEN"))
     private NhanVien nhanVien;
 
     @Column(name = "GioVao")

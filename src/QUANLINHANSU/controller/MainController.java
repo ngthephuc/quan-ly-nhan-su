@@ -23,30 +23,22 @@ public class MainController implements Initializable {
         switchHome();
     }
 
-    // Khớp với onAction="#switchHome"
+
     @FXML public void switchHome() {
         loadView("/fxml/DashboardView.fxml");
     }
-
-    // Khớp với onAction="#switchEmployee"
-    @FXML public void switchEmployee() {
-        loadView("/fxml/NhanVienView.fxml");
-    }
-
-    // Khớp với onAction="#switchPhongBan"
+    @FXML public void switchNhanVien() {loadView("/fxml/NhanVienView.fxml");}
     @FXML public void switchPhongBan() {
         loadView("/fxml/PhongBanView.fxml");
     }
-
-    // Khớp với onAction="#switchDuAn"
     @FXML public void switchDuAn() {
         loadView("/fxml/DuAnView.fxml");
     }
-
-    // Khớp với onAction="#switchLuong"
     @FXML public void switchLuong() {
         loadView("/fxml/LuongView.fxml");
     }
+    @FXML public void switchBoNhiem() {loadView("/fxml/BoNhiemView.fxml");}
+    @FXML public void switchChamCong() {loadView("/fxml/ChamCongView.fxml");}
 
     // Khớp với onAction="#logout"
     @FXML public void logout() {

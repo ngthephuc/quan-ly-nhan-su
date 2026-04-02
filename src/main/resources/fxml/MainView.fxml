@@ -9,25 +9,25 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane stylesheets="@/css/style.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="QUANLINHANSU.controller.MainController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" stylesheets="@/css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUANLINHANSU.controller.MainController">
     <children>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <children>
-                <BorderPane  layoutX="350.0" layoutY="128.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <BorderPane layoutX="350.0" layoutY="128.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <left>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
                                 <AnchorPane layoutY="126.0" prefHeight="600.0" prefWidth="200.0" styleClass="nav-form" stylesheets="@../CSS.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <Button fx:id="butHome" layoutX="10.0" layoutY="233.0" mnemonicParsing="false" onAction="#switchHome" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Trang Chủ" textFill="WHITE">
+                                        <Button fx:id="butHome" layoutX="11.0" layoutY="222.0" mnemonicParsing="false" onAction="#switchHome" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Trang Chủ" textFill="WHITE">
                                             <graphic>
                                                 <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="22" />
                                             </graphic></Button>
-                                        <Button fx:id="butNhanVien" layoutX="10.0" layoutY="268.0" mnemonicParsing="false" onAction="#switchEmployee" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Nhân Viên" textFill="WHITE">
+                                        <Button fx:id="butNhanVien" layoutX="11.0" layoutY="264.0" mnemonicParsing="false" onAction="#switchNhanVien" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Nhân Viên" textFill="WHITE">
                                             <graphic>
                                                 <FontAwesomeIconView fill="WHITE" glyphName="ADDRESS_CARD" size="21" />
                                             </graphic></Button>
-                                        <Button fx:id="butPhongBan" layoutX="10.0" layoutY="303.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Phòng Ban" textFill="WHITE">
+                                        <Button fx:id="butPhongBan" layoutX="10.0" layoutY="307.0" mnemonicParsing="false" onAction="#switchPhongBan" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Phòng Ban" textFill="WHITE">
                                             <graphic>
                                                 <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="22" />
                                             </graphic></Button>
@@ -50,12 +50,12 @@
                                                 <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="22" text="" />
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="butDuAn" layoutX="10.0" layoutY="338.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Dự Án" textFill="WHITE">
+                                        <Button fx:id="butDuAn" layoutX="11.0" layoutY="349.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Dự Án" textFill="WHITE">
                                             <graphic>
                                                 <FontAwesomeIconView fill="WHITE" glyphName="USER_PLUS" size="22" />
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="butLuong" layoutX="10.0" layoutY="373.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Lương Nhân Viên" textFill="WHITE">
+                                        <Button fx:id="butLuong" layoutX="11.0" layoutY="392.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Lương Nhân Viên" textFill="WHITE">
                                             <graphic>
                                                 <FontAwesomeIconView fill="WHITE" glyphName="MONEY" size="22" />
                                             </graphic>
@@ -66,6 +66,8 @@
                                                 <Font size="16.0" />
                                             </font>
                                         </Label>
+                              <Button fx:id="butHome1" layoutX="11.0" layoutY="436.0" mnemonicParsing="false" onAction="#switchBoNhiem" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Bổ Nhiệm" textFill="WHITE" />
+                              <Button fx:id="butHome2" layoutX="11.0" layoutY="480.0" mnemonicParsing="false" onAction="#switchChamCong" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Chấm Công" textFill="WHITE" />
                                     </children>
                                 </AnchorPane>
                             </children>
@@ -73,7 +75,7 @@
                     </left>
 <!--                    nơi hiện giao diện thay đoior-->
                     <center>
-                        <StackPane fx:id="content"/>
+                        <StackPane fx:id="content" />
                     </center>
                 </BorderPane>
             </children>

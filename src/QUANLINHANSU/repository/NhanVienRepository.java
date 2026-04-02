@@ -46,7 +46,28 @@ public class NhanVienRepository extends BaseRepository<NhanVien> {
 
     public long demNhanVienDangLam(EntityManager em) {
         return em.createQuery(
-                        "SELECT COUNT(nv) FROM NhanVien nv WHERE nv.trangThai = 'Đang làm'", Long.class)
+                        "SELECT COUNT(nv) FROM NhanVien nv WHERE LOWER( nv.trangThai) = :trangThai", Long.class)
+                .setParameter("trangThai", "Đang làm")
+                .getSingleResult();
+    }
+
+    public NhanVien layTruongPhong(EntityManager em, String maPb) {
+        List<NhanVien> result = em.createQuery(
+                        "SELECT b.nhanVien FROM BoNhiem b " +
+                                "WHERE b.nhanVien.phongBan.maPb = :maPb " +
+                                "AND LOWER(b.chucVu.maCV) LIKE '%TP%' " +
+                                "AND b.denNgay IS NULL", NhanVien.class)
+                .setParameter("maPb", maPb)
+                .getResultList();
+        return result.isEmpty() ? null : result.get(0);
+    }
+
+    public long demNhanVienTheoPhongBan(EntityManager em, String maPb) {
+        return em.createQuery(
+                        "SELECT COUNT(nv) FROM NhanVien nv " +
+                                "WHERE nv.phongBan.maPb = :maPb AND LOWER(nv.trangThai) = :trangThai", Long.class)
+                .setParameter("maPb", maPb)
+                .setParameter("trangThai", "Đang làm")
                 .getSingleResult();
     }
 

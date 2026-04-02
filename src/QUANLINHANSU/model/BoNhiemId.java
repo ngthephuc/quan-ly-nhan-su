@@ -9,10 +9,10 @@ import java.util.Objects;
 @Embeddable
 public class BoNhiemId implements Serializable {
 
-    @Column(name = "MaNV")
+    @Column(name = "MaNV",columnDefinition = "NVARCHAR(50)")
     private String maNV;
 
-    @Column(name = "MaCV")
+    @Column(name = "MaCV",columnDefinition = "NVARCHAR(50)")
     private String maCV;
 
     @Column(name = "TuNgay")
@@ -36,6 +36,18 @@ public class BoNhiemId implements Serializable {
 
     public LocalDate getTuNgay() {
         return tuNgay;
+    }
+
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
+    }
+
+    public void setMaCV(String maCV) {
+        this.maCV = maCV;
+    }
+
+    public void setTuNgay(LocalDate tuNgay) {
+        this.tuNgay = tuNgay;
     }
 
     @Override

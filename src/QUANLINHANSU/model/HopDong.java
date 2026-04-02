@@ -9,7 +9,7 @@ import java.util.Objects;
 public class HopDong {
 
     @Id
-    @Column(name = "MaHD")
+    @Column(name = "MaHD",columnDefinition = "NVARCHAR(50)")
     private String maHD;
 
     @Column(name = "LoaiHD",columnDefinition = "NVARCHAR(255)")

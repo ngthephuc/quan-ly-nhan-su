@@ -8,7 +8,7 @@ import java.util.List;
 public class ChucVu {
 
     @Id
-    @Column(name = "MaCV")
+    @Column(name = "MaCV" ,columnDefinition = "NVARCHAR(50)")
     private String maCV;
 
     @Column(name = "TenCV",columnDefinition = "NVARCHAR(255)")

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Du_An {
     @Id
-    @Column(name = "MaDuAn")
+    @Column(name = "MaDuAn",columnDefinition = "NVARCHAR(50)")
     private String maDA;
     @Column(name = "TenDuAn",columnDefinition = "NVARCHAR(255)")
     private String tenDA;

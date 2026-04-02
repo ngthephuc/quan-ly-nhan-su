@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox spacing="16" style="-fx-background-color: #EEEEEE; -fx-padding: 16;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUANLINHANSU.controller.PhongBanController">
+
+    <!-- ===== FORM BÊN TRÁI ===== -->
+    <VBox prefWidth="300" spacing="20" style="-fx-background-color: #EEEEEE;">
+
+        <!-- Tiêu đề -->
+        <VBox spacing="4">
+            <Label style="-fx-font-size: 22px; -fx-font-weight: BOLD; -fx-text-fill: #222;" text="Phòng Ban" />
+            <Separator />
+        </VBox>
+
+        <!-- Các trường nhập -->
+        <VBox spacing="20">
+            <GridPane hgap="8" vgap="20">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="110" />
+                    <ColumnConstraints prefWidth="180" />
+                </columnConstraints>
+
+                <Label text="Mã Phòng Ban:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <TextField fx:id="txtMaPb" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <Label text="Tên Phòng Ban:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="txtTenPb" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <Label text="Hệ Số Lương:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <TextField fx:id="txtHeSoLuong" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
+            </GridPane>
+        </VBox>
+
+        <!-- Spacer -->
+        <Region prefHeight="71.0" prefWidth="300.0" VBox.vgrow="ALWAYS" />
+
+        <!-- Nút Thêm / Sửa / Xóa -->
+        <HBox spacing="8">
+            <Button onAction="#them" prefHeight="30" prefWidth="90" style="-fx-background-color: #D0D0D0; -fx-background-radius: 4; -fx-cursor: hand;" text="Thêm" />
+            <Button onAction="#sua" prefHeight="30" prefWidth="90" style="-fx-background-color: #D0D0D0; -fx-background-radius: 4; -fx-cursor: hand;" text="Sửa" />
+            <Button onAction="#xoa" prefHeight="30" prefWidth="90" style="-fx-background-color: #D0D0D0; -fx-background-radius: 4; -fx-cursor: hand;" text="Xóa" />
+         <Button onAction="#lamSach" prefHeight="30" prefWidth="90" style="-fx-background-color: #D0D0D0; -fx-background-radius: 4; -fx-cursor: hand;" text="Làm sạch" />
+        </HBox>
+
+        <!-- Nút Thông Tin Chi Tiết -->
+        <Button maxWidth="Infinity" onAction="#xemChiTiet" prefHeight="36" style="-fx-background-color: #D0D0D0; -fx-background-radius: 4; -fx-cursor: hand;" text="Thông Tin Chi Tiết" />
+
+    </VBox>
+
+    <!-- ===== BẢNG BÊN PHẢI ===== -->
+    <VBox style="-fx-background-color: white; -fx-border-color: #CCCCCC;                  -fx-border-width: 1; -fx-padding: 0;" HBox.hgrow="ALWAYS">
+
+        <TableView fx:id="tablePhongBan" onMouseClicked="#chonPhongBan" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colMaPb" prefWidth="90" text="MaPB" />
+                <TableColumn fx:id="colTenPb" prefWidth="180" text="Tên Phòng Ban" />
+                <TableColumn fx:id="colHeSoLuong" prefWidth="110" text="Hệ Số Lương" />
+                <TableColumn fx:id="colTruongPhong" prefWidth="160" text="Trưởng Phòng" />
+                <TableColumn fx:id="colSoThanhVien" prefWidth="120" text="Số Thành Viên" />
+            </columns>
+            <placeholder>
+                <Label style="-fx-text-fill: #999;" text="No content in table" />
+            </placeholder>
+        </TableView>
+
+    </VBox>
+
+</HBox>

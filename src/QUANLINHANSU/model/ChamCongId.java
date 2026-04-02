@@ -10,7 +10,7 @@ import java.util.Objects;
 @Embeddable
 public class ChamCongId implements Serializable {
 
-    @Column(name = "MaNV")
+    @Column(name = "MaNV",columnDefinition = "NVARCHAR(50)")
     private String maNV;
 
     @Column(name = "Ngay")

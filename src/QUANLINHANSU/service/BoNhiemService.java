@@ -19,13 +19,18 @@ public class BoNhiemService {
 
     // ===================== BỔ NHIỆM MỚI =====================
     // Tự động kết thúc chức vụ cũ rồi thêm chức vụ mới — 2 bước trong 1 transaction
-    public void boNhiem(String maNV, String maCV, String quyetDinhSo) {
+    public void boNhiem(String maNV, String maCV,LocalDate tuNgay, String quyetDinhSo) {
         if (maNV == null || maNV.isBlank())
             throw new IllegalArgumentException("Mã nhân viên không được để trống!");
         if (maCV == null || maCV.isBlank())
             throw new IllegalArgumentException("Mã chức vụ không được để trống!");
         if (quyetDinhSo == null || quyetDinhSo.isBlank())
             throw new IllegalArgumentException("Số quyết định không được để trống!");
+        if(tuNgay==null ){
+            throw new IllegalArgumentException("Ngày bổ nhiệm không được bỏ trống!");
+        } if(tuNgay.isBefore(LocalDate.now()) ){
+            throw new IllegalArgumentException("Ngày bổ nhiệm không được là ngày quá khứ!");
+        }
 
         EntityManager em = JPAUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -45,7 +50,7 @@ public class BoNhiemService {
             }
 
             // Tạo bổ nhiệm mới
-            BoNhiemId id = new BoNhiemId(maNV, maCV, LocalDate.now());
+            BoNhiemId id = new BoNhiemId(maNV, maCV, tuNgay);
             BoNhiem boNhiemMoi = new BoNhiem(
                     id,
                     nhanVienRepo.timById(em, maNV),

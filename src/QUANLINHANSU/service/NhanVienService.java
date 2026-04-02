@@ -15,7 +15,7 @@ public class    NhanVienService {
 
     private final NhanVienRepository nhanVienRepo = new NhanVienRepository();
     private final PhongBanRepository phongBanRepo = new PhongBanRepository();
-    private final HopDongRepository hopDongRepo = new HopDongRepository();
+
 
     // thêm nhân viên
     public void themNhanVien(NhanVien nhanVien) {
@@ -168,11 +168,21 @@ public class    NhanVienService {
     }
 
     public long demNhanVienDangLam() {
-        EntityManager em = JPAUtil.getEntityManager();
-        try {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
             return nhanVienRepo.demNhanVienDangLam(em);
-        } finally {
-            em.close();
         }
     }
+
+    public NhanVien layTruongPhong(String maPB){
+        try (EntityManager em = JPAUtil.getEntityManager()) {
+            return nhanVienRepo.layTruongPhong(em, maPB);
+        }
+    }
+
+    public long demNhanVienTheoPhongBan(String maPb){
+        try (EntityManager em = JPAUtil.getEntityManager()) {
+            return nhanVienRepo.demNhanVienTheoPhongBan(em, maPb);
+        }
+    }
+
 }

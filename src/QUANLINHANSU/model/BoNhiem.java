@@ -4,25 +4,26 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name="BoNhiem")
 public class BoNhiem {
 
     @EmbeddedId
     private BoNhiemId id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("maNV")
-    @JoinColumn(name = "MaNV")
+    @JoinColumn(name = "MaNV",columnDefinition = "NVARCHAR(50)")
     private NhanVien nhanVien;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("maCV")
-    @JoinColumn(name = "MaCV")
+    @JoinColumn(name = "MaCV",columnDefinition = "NVARCHAR(50)")
     private ChucVu chucVu;
 
     @Column(name = "DenNgay")
     private LocalDate denNgay;
 
-    @Column(name = "QuyetDinhSo")
+    @Column(name = "QuyetDinhSo",columnDefinition = "NVARCHAR(255)")
     private String quyetDinhSo;
 
     public BoNhiem() {

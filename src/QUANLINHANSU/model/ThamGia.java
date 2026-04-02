@@ -9,14 +9,14 @@ public class ThamGia {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "MaNV")
+    @JoinColumn(name = "MaNV", columnDefinition = "NVARCHAR(50)")
     private NhanVien nhanVien;
 
     @ManyToOne
-    @JoinColumn(name = "MaDA")
+    @JoinColumn(name = "MaDA",columnDefinition = "NVARCHAR(255)")
     private Du_An duAn;
 
-    @Column(name = "VaiTro")
+    @Column(name = "VaiTro",columnDefinition = "NVARCHAR(255)")
     private String vaiTro;
 
     @Column(name = "SoGio")

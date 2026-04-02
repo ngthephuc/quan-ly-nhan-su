@@ -1,13 +1,16 @@
 package QUANLINHANSU.model;
 
+import QUANLINHANSU.service.BoNhiemService;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "PhongBan")
 public class PhongBan {
 
     @Id
-    @Column(name = "MaPhongBan")
+    @Column(name = "MaPhongBan",columnDefinition = "NVARCHAR(50)")
     private String maPb;
 
     @Column(name = "TenPhongBan", columnDefinition = "NVARCHAR(255)")
@@ -16,6 +19,10 @@ public class PhongBan {
     @Column(name = "HeSoLuong")
     private Double heSoLuong;
 
+
+    @OneToMany(mappedBy = "phongBan")
+    private List<NhanVien> danhSachNhanVien;
+
     public PhongBan() {
     }
 
@@ -23,6 +30,22 @@ public class PhongBan {
         this.maPb = maPb;
         this.tenPb = tenPb;
         this.heSoLuong = heSoLuong;
+    }
+
+    public PhongBan(String maPb, String tenPb, Double heSoLuong, List<NhanVien> danhSachNhanVien) {
+        this.maPb = maPb;
+        this.tenPb = tenPb;
+        this.heSoLuong = heSoLuong;
+        this.danhSachNhanVien = danhSachNhanVien;
+    }
+
+
+    public List<NhanVien> getDanhSachNhanVien() {
+        return danhSachNhanVien;
+    }
+
+    public void setDanhSachNhanVien(List<NhanVien> danhSachNhanVien) {
+        this.danhSachNhanVien = danhSachNhanVien;
     }
 
     public String getMaPb() {
@@ -47,6 +70,10 @@ public class PhongBan {
 
     public void setHeSoLuong(Double heSoLuong) {
         this.heSoLuong = heSoLuong;
+    }
+
+    public void getTruongPhongBan() {
+        BoNhiemService boNhiem = new BoNhiemService();
     }
 
     @Override
