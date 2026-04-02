@@ -1,5 +1,6 @@
 package QUANLINHANSU.service;
 
+import QUANLINHANSU.model.ChucVu;
 import QUANLINHANSU.model.NhanVien;
 import QUANLINHANSU.model.SaLary;
 import QUANLINHANSU.repository.Cham_CongRepository;
@@ -20,44 +21,55 @@ public class SalaryService {
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-            // // 1. Tìm nhân viên
-            NhanVien nv = em.find(NhanVien.class, maNV);
+
+            // 1. Tìm nhân viên (Dùng JOIN FETCH để kéo luôn list Bổ nhiệm về, tránh Lazy lỗi)
+            NhanVien nv = em.createQuery(
+                            "SELECT n FROM NhanVien n LEFT JOIN FETCH n.danhSachBoNhiem WHERE n.maNV = :ma", NhanVien.class)
+                    .setParameter("ma", maNV)
+                    .getSingleResult();
+
             if (nv == null) throw new RuntimeException("Nhân viên không tồn tại!");
 
-            // // 2. Tìm bản ghi lương cũ (Dùng repo tìm cho chuẩn)
-            SaLary s = repo.timTheoMa(em, maNV);
-            boolean isNew = false;
+            // 2. Tìm hoặc khởi tạo bản ghi lương
+            SaLary s = em.find(SaLary.class, maNV);
             if (s == null) {
-                s = new SaLary(nv); // // Constructor gán ID mà anh em mình đã sửa
-                isNew = true;
+                s = new SaLary(nv);
+                em.persist(s); // Persist luôn để Hibernate quản lý
             }
 
-            // // 3. Tính toán công thức (Lương gốc * Hệ số / 26 * Công + Phụ cấp)
+            // 3. LẤY CHỨC VỤ MỚI NHẤT TỪ BẢNG BỔ NHIỆM
+            // Sử dụng hàm getChucVuHienTai() mà anh em mình đã viết trong class NhanVien
+            ChucVu cvHienTai = nv.getChucVuHienTai();
+
+            // 4. Tính toán các thành phần lương
             double tongSoCong = chamCongRepo.tinhTongCongThang(em, maNV, thang, nam);
             double luongGoc = (nv.getHopDong() != null) ? nv.getHopDong().getLuongCoBan() : 0;
             double heSo = (nv.getPhongBan() != null) ? nv.getPhongBan().getHeSoLuong() : 1.0;
-            double phuCap = (nv.getChucVu() != null) ? nv.getChucVu().getPhuCap() : 0;
+
+            // Lấy phụ cấp từ chức vụ trong bảng Bổ Nhiệm
+            double phuCap = (cvHienTai != null) ? cvHienTai.getPhuCap() : 0;
+
+            // Công thức tính: ((Lương gốc * Hệ số) / 26) * Công + Phụ cấp
             double thucNhan = ((luongGoc * heSo) / 26.0) * tongSoCong + phuCap;
 
+            // 5. Cập nhật vào Object Salary
             s.setSoNgayCong(tongSoCong);
             s.setLuongCoBan(luongGoc);
             s.setPhuCapChucVu(phuCap);
             s.setTongLuongThucNhan(Math.round(thucNhan));
 
-            // // 4. Lưu dữ liệu
-            if (isNew) {
-                em.persist(s);
-            } else {
-                em.merge(s);
-            }
-
-            em.flush(); // // Chốt hạ để tránh lỗi AssertionFailure
+            // 6. Chốt hạ
+            em.merge(s);
             tx.commit();
+            System.out.println(">>> Đã tính lương xong cho: " + nv.getHoTen() + " - Chức vụ: " + (cvHienTai != null ? cvHienTai.getTenCV() : "N/A"));
+
         } catch (Exception e) {
-            if (tx.isActive()) tx.rollback();
+            if (tx != null && tx.isActive()) tx.rollback();
             e.printStackTrace();
             throw e;
-        } finally { em.close(); }
+        } finally {
+            if (em != null && em.isOpen()) em.close();
+        }
     }
 
     // // --- HÀM LẤY TẤT CẢ (Đã mở khóa và dùng Repo) ---

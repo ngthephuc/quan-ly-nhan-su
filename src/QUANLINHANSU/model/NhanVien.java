@@ -52,16 +52,14 @@ public class NhanVien {
     @OneToMany(mappedBy = "nhanVien")
     private List<ThamGia> danhSachThamGia;
 
-    @ManyToOne
-    @JoinColumn(name = "maChucVu")
-    private ChucVu chucVu;
+
 
 
 
     public NhanVien() {
     }
 
-    public NhanVien(String maNV, String hoTen, List<ThamGia> danhSachThamGia, List<BoNhiem> danhSachBoNhiem, String trangThai, LocalDate ngayVaoLam, String sdt, String email, String diaChi, String cccd, String gioiTinh, LocalDate ngaySinh, PhongBan phongBan, HopDong hopDong,ChucVu chucVu) {
+    public NhanVien(String maNV, String hoTen, List<ThamGia> danhSachThamGia, List<BoNhiem> danhSachBoNhiem, String trangThai, LocalDate ngayVaoLam, String sdt, String email, String diaChi, String cccd, String gioiTinh, LocalDate ngaySinh, PhongBan phongBan, HopDong hopDong) {
         this.maNV = maNV;
         this.hoTen = hoTen;
         this.danhSachThamGia = danhSachThamGia;
@@ -76,7 +74,7 @@ public class NhanVien {
         this.ngaySinh = ngaySinh;
         this.phongBan = phongBan;
         this.hopDong = hopDong;
-        this.chucVu=chucVu;
+
 
     }
 
@@ -191,14 +189,21 @@ public class NhanVien {
     public void setDanhSachThamGia(List<ThamGia> danhSachThamGia) {
         this.danhSachThamGia = danhSachThamGia;
     }
+    public BoNhiem getBoNhiemHienTai() {
+        if (danhSachBoNhiem == null || danhSachBoNhiem.isEmpty()) return null;
 
-    public ChucVu getChucVu() {
-        return chucVu;
+        // Logic: Lấy bản ghi có TuNgay lớn nhất (mới nhất)
+        return danhSachBoNhiem.stream()
+                .max((bn1, bn2) -> bn1.getId().getTuNgay().compareTo(bn2.getId().getTuNgay()))
+                .orElse(null);
     }
 
-    public void setChucVu(ChucVu chucVu) {
-        this.chucVu = chucVu;
+    public ChucVu getChucVuHienTai() {
+        BoNhiem bn = getBoNhiemHienTai();
+        return (bn != null) ? bn.getChucVu() : null;
     }
+
+
 
 
 

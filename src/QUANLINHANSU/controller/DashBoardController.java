@@ -26,17 +26,17 @@ public class DashBoardController implements Initializable {
     @FXML private Label lblTongDA;
 
 //    // ===== Bảng chấm công hôm nay =====
-//    @FXML private TableView<Cham_Cong> tableChamCongHomNay;
-//    @FXML private TableColumn<Cham_Cong, String> colMaNV;
-//    @FXML private TableColumn<Cham_Cong, String> colHoTen;
-//    @FXML private TableColumn<Cham_Cong, String> colGioVao;
-//    @FXML private TableColumn<Cham_Cong, String> colGioRa;
+    @FXML private TableView<Cham_Cong> tableChamCongHomNay;
+    @FXML private TableColumn<Cham_Cong, String> colMaNV;
+    @FXML private TableColumn<Cham_Cong, String> colHoTen;
+    @FXML private TableColumn<Cham_Cong, String> colGioVao;
+    @FXML private TableColumn<Cham_Cong, String> colGioRa;
 
 
     private final NhanVienService nhanVienService = new NhanVienService();
     private final PhongBanService phongBanService = new PhongBanService();
     private final DuAnService duAnService = new DuAnService();
-//    private final Cham_CongService chamCongService = new Cham_CongService();
+    private final Cham_CongService chamCongService = new Cham_CongService();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -45,28 +45,28 @@ public class DashBoardController implements Initializable {
     }
 
     // ===================== SETUP CỘT =====================
-//    private void setupColumns() {
-//
-//        // Cột bảng chấm công
-//        colMaNV.setCellValueFactory(c ->
-//                new SimpleStringProperty(
-//                        c.getValue().getNhanVien().getMaNV()));
-//
-//        colHoTen.setCellValueFactory(c ->
-//                new SimpleStringProperty(
-//                        c.getValue().getNhanVien().getHoTen()));
-//
-//        colGioVao.setCellValueFactory(c ->
-//                new SimpleStringProperty(
-//                        c.getValue().getGioVao() != null
-//                                ? c.getValue().getGioVao().toString() : ""));
-//
-//        colGioRa.setCellValueFactory(c ->
-//                new SimpleStringProperty(
-//                        c.getValue().getGioRa() != null
-//                                ? c.getValue().getGioRa().toString() : "Chua ra"));
-//
-//    }
+    private void setupColumns() {
+
+        // Cột bảng chấm công
+        colMaNV.setCellValueFactory(c ->
+                new SimpleStringProperty(
+                        c.getValue().getNhanVien().getMaNV()));
+
+        colHoTen.setCellValueFactory(c ->
+                new SimpleStringProperty(
+                        c.getValue().getNhanVien().getHoTen()));
+
+        colGioVao.setCellValueFactory(c ->
+                new SimpleStringProperty(
+                        c.getValue().getGioVao() != null
+                                ? c.getValue().getGioVao().toString() : ""));
+
+        colGioRa.setCellValueFactory(c ->
+                new SimpleStringProperty(
+                        c.getValue().getGioRa() != null
+                                ? c.getValue().getGioRa().toString() : "Chua ra"));
+
+    }
 
     // ===================== LOAD DỮ LIỆU =====================
     private void loadData() {
@@ -85,11 +85,11 @@ public class DashBoardController implements Initializable {
                     duAnService.layTatCaDuAn().size()));
 
             // Bảng chấm công hôm nay
-//            List<Cham_Cong> ccHomNay = chamCongService.layTheoNgay(LocalDate.now());
+            List<Cham_Cong> ccHomNay = chamCongService.layTheoNgay(LocalDate.now());
 //
-//// Đẩy vào bảng là xong
-//            tableChamCongHomNay.setItems(FXCollections.observableArrayList(ccHomNay));
-//            tableChamCongHomNay.setItems(FXCollections.observableArrayList(ccHomNay));
+// Đẩy vào bảng là xong
+            tableChamCongHomNay.setItems(FXCollections.observableArrayList(ccHomNay));
+            tableChamCongHomNay.setItems(FXCollections.observableArrayList(ccHomNay));
 
 
 
