@@ -2,6 +2,7 @@ package QUANLINHANSU.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,15 +19,17 @@ public class HopDong {
     @Column(name = "LuongCoBan")
     private double luongCoBan;
 
+
+
     public HopDong() {
     }
 
-    public HopDong(String maHD, String loaiHD, LocalDate ngayKi,
-                   LocalDate ngayBatDau, LocalDate ngayKetThuc,
-                   double luongCoBan, NhanVien nhanVien) {
+    public HopDong(String maHD, String loaiHD,
+                   double luongCoBan, List<NhanVien> listNhanVien) {
         this.maHD = maHD;
         this.loaiHD = loaiHD;
         this.luongCoBan = luongCoBan;
+
     }
 
     public String getMaHD() {
@@ -53,6 +56,7 @@ public class HopDong {
     public void setLuongCoBan(double luongCoBan) {
         this.luongCoBan = luongCoBan;
     }
+
 
 
     @Override

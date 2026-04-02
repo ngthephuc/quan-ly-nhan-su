@@ -35,7 +35,7 @@ public class MainController implements Initializable {
         loadView("/fxml/DuAnView.fxml");
     }
     @FXML public void switchLuong() {
-        loadView("/fxml/LuongView.fxml");
+        loadView("/fxml/Salary.fxml");
     }
     @FXML public void switchBoNhiem() {loadView("/fxml/BoNhiemView.fxml");}
     @FXML public void switchChamCong() {loadView("/fxml/ChamCongView.fxml");}

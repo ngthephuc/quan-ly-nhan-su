@@ -25,7 +25,7 @@ public class DashBoardController implements Initializable {
     @FXML private Label lblTongPB;
     @FXML private Label lblTongDA;
 
-    // ===== Bảng chấm công hôm nay =====
+//    // ===== Bảng chấm công hôm nay =====
     @FXML private TableView<Cham_Cong> tableChamCongHomNay;
     @FXML private TableColumn<Cham_Cong, String> colMaNV;
     @FXML private TableColumn<Cham_Cong, String> colHoTen;
@@ -40,7 +40,7 @@ public class DashBoardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setupColumns();
+//        setupColumns();
         loadData();
     }
 
@@ -86,6 +86,9 @@ public class DashBoardController implements Initializable {
 
             // Bảng chấm công hôm nay
             List<Cham_Cong> ccHomNay = chamCongService.layTheoNgay(LocalDate.now());
+//
+// Đẩy vào bảng là xong
+            tableChamCongHomNay.setItems(FXCollections.observableArrayList(ccHomNay));
             tableChamCongHomNay.setItems(FXCollections.observableArrayList(ccHomNay));
 
 

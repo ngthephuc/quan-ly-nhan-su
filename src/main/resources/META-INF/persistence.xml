@@ -19,6 +19,7 @@
         <class>QUANLINHANSU.model.Du_An</class>
         <class>QUANLINHANSU.model.ThamGia</class>
         <class>QUANLINHANSU.model.Cham_Cong</class>
+        <class>QUANLINHANSU.model.TaiKhoan</class>
 
         <properties>
 
