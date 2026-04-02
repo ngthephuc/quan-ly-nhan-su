@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #f4f7f6;" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUANLINHANSU.controller.SalaryController">
+    <children>
+        <VBox spacing="15" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
+            <children>
+                <VBox spacing="5">
+                    <children>
+                        <Label text="QUẢN LÝ BẢNG LƯƠNG NHÂN VIÊN" textFill="#2b593a">
+                            <font><Font name="System Bold" size="24.0" /></font>
+                        </Label>
+                        <Pane maxWidth="250" prefHeight="4.0" style="-fx-background-color: #2b593a; -fx-background-radius: 5;" />
+                    </children>
+                </VBox>
+
+                <GridPane hgap="20" style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 15, 0, 0, 8);" vgap="15">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="100" />
+                        <ColumnConstraints prefWidth="250" />
+                        <ColumnConstraints halignment="RIGHT" minWidth="100" />
+                        <ColumnConstraints prefWidth="250" />
+                    </columnConstraints>
+                    <children>
+                        <Label text="Mã NV:" textFill="#555" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <TextField fx:id="txtMaNV" promptText="Nhập mã nhân viên..." style="-fx-background-radius: 8; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label text="Họ Tên:" textFill="#555" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <Label fx:id="lblHoTen" text="---" textFill="#13692b" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                            <font><Font name="System Bold" size="16.0" /></font>
+                        </Label>
+
+                        <Label text="Phòng Ban:" textFill="#555" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <TextField fx:id="txtPhongBan" editable="false" promptText="Tự động..." style="-fx-background-radius: 8; -fx-padding: 8; -fx-background-color: #f9f9f9;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label text="Hệ Số Lương:" textFill="#555" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <TextField fx:id="txtHeSoLuong" editable="false" promptText="Tự động..." style="-fx-background-radius: 8; -fx-padding: 8; -fx-background-color: #f9f9f9;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                        <Label text="Lương CB:" textFill="#555" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <TextField fx:id="txtLuongCB" editable="false" style="-fx-background-radius: 8; -fx-padding: 8; -fx-background-color: #f9f9f9;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                        <Label text="Phụ Cấp:" textFill="#555" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <TextField fx:id="txtPhuCap" editable="false" style="-fx-background-radius: 8; -fx-padding: 8; -fx-background-color: #f9f9f9;" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+
+                        <Label text="Ngày Công:" textFill="#555" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <TextField fx:id="txtSoNgayCong" editable="false" style="-fx-background-radius: 8; -fx-padding: 8; -fx-background-color: #f9f9f9;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                        <Label text="Lương Nhận:" textFill="#555" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <Label fx:id="lblLuong" text="0 VNĐ" textFill="#d31010" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                            <font><Font name="System Bold" size="20.0" /></font>
+                        </Label>
+                    </children>
+                </GridPane>
+
+                <HBox alignment="CENTER_LEFT" spacing="20">
+                    <padding>
+                        <Insets left="10.0" />
+                    </padding>
+                    <children>
+                        <Button onAction="#handleCalculateSalary" prefHeight="45.0" prefWidth="160.0"
+                                style="-fx-background-color: linear-gradient(to bottom right, #2ecc71, #27ae60); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 25; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 3);"
+                                text="📊 TÍNH LƯƠNG" />
+                        <Button onAction="#handleClearForm" prefHeight="45.0" prefWidth="160.0"
+                                style="-fx-background-color: linear-gradient(to bottom right, #3498db, #2980b9); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 25; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 3);"
+                                text="🧹 LÀM SẠCH" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+
+        <TableView fx:id="tblSalary" onMouseClicked="#handleTableClick"
+                   style="-fx-background-radius: 15; -fx-border-radius: 15;"
+                   AnchorPane.bottomAnchor="20"
+                   AnchorPane.leftAnchor="20"
+                   AnchorPane.rightAnchor="20"
+                   AnchorPane.topAnchor="380"> <columns>
+            <TableColumn fx:id="colID" prefWidth="70.0" text="Mã NV" />
+            <TableColumn fx:id="colHoTen" prefWidth="180.0" text="Họ Tên Nhân Viên" />
+            <TableColumn fx:id="colPhongBan" prefWidth="150.0" text="Phòng Ban" />
+            <TableColumn fx:id="colChamCong" prefWidth="100.0" text="Số Công" />
+            <TableColumn fx:id="colLuong" prefWidth="200.0" text="Tổng Lương (VNĐ)" />
+        </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
+    </children>
+</AnchorPane>
