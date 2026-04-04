@@ -23,6 +23,11 @@ public class Du_An {
     private double soNguoiThamGia;
     @OneToMany(mappedBy = "duAn")
     private List<ThamGia> danhSachThamGia;
+
+
+    public void setSoNguoiThamGia(int soNguoiThamGia) {
+        this.soNguoiThamGia = soNguoiThamGia;
+    }
     public Du_An() {
     }
 

@@ -79,8 +79,12 @@ public class Cham_CongService {
                 // Bỏ qua nếu đã chấm rồi
                 if (chamCongRepo.daChamCong(em, nv.getMaNV(), ngay)) continue;
 
+                // 👇 dòng quan trọng fix lỗi
+                NhanVien nvManaged = em.find(NhanVien.class, nv.getMaNV());
+
+
                 ChamCongId id = new ChamCongId(nv.getMaNV(), ngay);
-                Cham_Cong cc  = new Cham_Cong(id, nv, gioVao, gioRa);
+                Cham_Cong cc  = new Cham_Cong(id, nvManaged, gioVao, gioRa);
                 chamCongRepo.them(em, cc);
                 soLuongThanhCong++;
             }
@@ -89,6 +93,7 @@ public class Cham_CongService {
 
         } catch (Exception e) {
             if (tx.isActive()) tx.rollback();
+            e.printStackTrace();
             throw new RuntimeException("Lỗi khi chấm công hàng loạt: " + e.getMessage(), e);
         } finally {
             em.close();
