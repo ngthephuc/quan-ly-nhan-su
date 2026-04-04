@@ -50,7 +50,7 @@
                                                 <FontAwesomeIconView fill="WHITE" glyphName="SIGN_OUT" size="22" text="" />
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="butDuAn" layoutX="11.0" layoutY="349.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Dự Án" textFill="WHITE">
+                                        <Button fx:id="butDuAn" layoutX="11.0" layoutY="349.0" mnemonicParsing="false" onAction="#switchDuAn" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Dự Án" textFill="WHITE">
                                             <graphic>
                                                 <FontAwesomeIconView fill="WHITE" glyphName="USER_PLUS" size="22" />
                                             </graphic>

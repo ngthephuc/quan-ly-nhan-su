@@ -20,10 +20,12 @@ public class Du_An {
     private LocalDate ngayBatDau;
     @Column(name = "Ngayketthuc")
     private LocalDate ngayKetThuc;
+    private double soNguoiThamGia;
     @OneToMany(mappedBy = "duAn")
     private List<ThamGia> danhSachThamGia;
     public Du_An() {
     }
+
 
     public Du_An(String maDA, String tenDA, double kinhPhi, LocalDate ngayBatDau, LocalDate ngayKetThuc) {
         this.maDA = maDA;
@@ -79,6 +81,14 @@ public class Du_An {
 
     public void setNgayKetThuc(LocalDate ngayKetThuc) {
         this.ngayKetThuc = ngayKetThuc;
+    }
+
+    public double getSoNguoiThamGia() {
+        return soNguoiThamGia;
+    }
+
+    public void setSoNguoiThamGia(double soNguoiThamGia) {
+        this.soNguoiThamGia = soNguoiThamGia;
     }
 
     @Override
