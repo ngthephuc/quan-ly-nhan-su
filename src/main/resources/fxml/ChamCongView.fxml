@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10" style="-fx-background-color: white; -fx-padding: 16;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUANLINHANSU.controller.ChamCongController">
+
+    <Label style="-fx-font-size: 18px; -fx-font-weight: BOLD; -fx-text-fill: #1B3A2D;" text="Chấm Công" />
+
+    <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+
+        <!-- ===== TAB 1: CHẤM CÔNG ĐƠN LẺ ===== -->
+        <Tab text="Chấm Công Đơn Lẻ">
+            <VBox spacing="10" style="-fx-padding: 16;">
+
+                <!-- Bảng -->
+                <TableView fx:id="tableDonLe" onMouseClicked="#chonBanGhi" prefHeight="230">
+                    <columns>
+                        <TableColumn fx:id="colDLMaNV" prefWidth="73.60000610351562" text="Mã NV" />
+                        <TableColumn fx:id="colDLHoTen" prefWidth="228.0" text="Họ Tên" />
+                        <TableColumn fx:id="colDLNgay" prefWidth="181.5999755859375" text="Ngày" />
+                        <TableColumn fx:id="colDLGioVao" prefWidth="148.0" text="Giờ Vào" />
+                        <TableColumn fx:id="colDLGioRa" prefWidth="159.20001220703125" text="Giờ Ra" />
+                    </columns>
+                    <placeholder>
+                        <Label style="-fx-text-fill: #90A4AE;" text="Không có dữ liệu" />
+                    </placeholder>
+                </TableView>
+
+                <!-- Form -->
+                <GridPane hgap="12" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="110" />
+                        <ColumnConstraints prefWidth="200" />
+                        <ColumnConstraints halignment="RIGHT" minWidth="110" />
+                        <ColumnConstraints prefWidth="200" />
+                        <ColumnConstraints prefWidth="120" />
+                    </columnConstraints>
+
+                    <!-- Hàng 1 -->
+                    <Label text="Nhân Viên:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <ComboBox fx:id="cbNhanVienDL" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label text="Giờ Vào:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtGioVao" promptText="VD: 08:00" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                    <VBox alignment="CENTER" spacing="8" GridPane.columnIndex="4" GridPane.rowIndex="0" GridPane.rowSpan="2">
+                        <Button onAction="#luuDonLe" prefHeight="32" prefWidth="100" style="-fx-background-color: #1B3A2D; -fx-text-fill: white;                                        -fx-background-radius: 4; -fx-cursor: hand;" text="Lưu" />
+                        <Button onAction="#xoaDonLe" prefHeight="32" prefWidth="100" style="-fx-background-color: #455A64; -fx-text-fill: white;                                        -fx-background-radius: 4; -fx-cursor: hand;" text="Xóa" />
+                        <Button onAction="#lamSachDonLe" prefHeight="32" prefWidth="100" style="-fx-background-color: #455A64; -fx-text-fill: white;                                        -fx-background-radius: 4; -fx-cursor: hand;" text="Làm Sạch" />
+                    </VBox>
+
+                    <!-- Hàng 2 -->
+                    <Label text="Ngày:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <DatePicker fx:id="dpNgayDL" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label text="Giờ Ra:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <TextField fx:id="txtGioRa" promptText="VD: 17:30" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+
+                </GridPane>
+            </VBox>
+        </Tab>
+
+        <!-- ===== TAB 2: CHẤM CÔNG HÀNG LOẠT ===== -->
+        <Tab text="Chấm Công Hàng Loạt">
+            <VBox spacing="12" style="-fx-padding: 16;">
+
+                <!-- Chọn ngày + giờ chung -->
+                <GridPane hgap="12" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="80" />
+                        <ColumnConstraints prefWidth="160" />
+                        <ColumnConstraints halignment="RIGHT" minWidth="80" />
+                        <ColumnConstraints prefWidth="120" />
+                        <ColumnConstraints halignment="RIGHT" minWidth="80" />
+                        <ColumnConstraints prefWidth="120" />
+                    </columnConstraints>
+
+                    <Label text="Ngày:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <DatePicker fx:id="dpNgayHL" prefWidth="160" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label text="Giờ Vào:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtGioVaoHL" promptText="08:00" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                    <Label text="Giờ Ra:" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                    <TextField fx:id="txtGioRaHL" promptText="17:30" GridPane.columnIndex="5" GridPane.rowIndex="0" />
+               <rowConstraints>
+                  <RowConstraints />
+               </rowConstraints>
+                </GridPane>
+
+                <!-- Bảng chọn nhân viên (tick checkbox) -->
+                <Label style="-fx-font-weight: BOLD; -fx-text-fill: #455A64;" text="Chọn nhân viên có mặt:" />
+
+                <TableView fx:id="tableHangLoat" prefHeight="260" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colHLChon" prefWidth="60" text="Chọn" />
+                        <TableColumn fx:id="colHLMaNV" prefWidth="90" text="Mã NV" />
+                        <TableColumn fx:id="colHLHoTen" prefWidth="200" text="Họ Tên" />
+                        <TableColumn fx:id="colHLPB" prefWidth="150" text="Phòng Ban" />
+                    </columns>
+                    <placeholder>
+                        <Label style="-fx-text-fill: #90A4AE;" text="Không có nhân viên" />
+                    </placeholder>
+                </TableView>
+
+                <HBox alignment="CENTER_RIGHT" spacing="12">
+                    <Button onAction="#chonTatCa" style="-fx-background-color: #607D8B; -fx-text-fill: white;                                    -fx-background-radius: 4; -fx-cursor: hand;" text="Chọn Tất Cả" />
+                    <Button onAction="#boChonTatCa" style="-fx-background-color: #607D8B; -fx-text-fill: white;                                    -fx-background-radius: 4; -fx-cursor: hand;" text="Bỏ Chọn Tất Cả" />
+                    <Button onAction="#luuHangLoat" prefHeight="32" style="-fx-background-color: #1B3A2D; -fx-text-fill: white;                                    -fx-background-radius: 4; -fx-cursor: hand;" text="Lưu Chấm Công" />
+                </HBox>
+
+            </VBox>
+        </Tab>
+
+        <!-- ===== TAB 3: LỊCH SỬ CHẤM CÔNG ===== -->
+        <Tab text="Lịch Sử Theo Tháng">
+            <VBox spacing="10" style="-fx-padding: 16;">
+
+                <!-- Bộ lọc -->
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label text="Nhân Viên:" />
+                    <ComboBox fx:id="cbNhanVienLS" prefWidth="200" />
+                    <Label text="Tháng:" />
+                    <ComboBox fx:id="cbThang" prefWidth="80" />
+                    <Label text="Năm:" />
+                    <TextField fx:id="txtNam" prefWidth="80" />
+                    <Button onAction="#xemLichSu" prefHeight="30" style="-fx-background-color: #455A64; -fx-text-fill: white;                                    -fx-background-radius: 4; -fx-cursor: hand;" text="Xem" />
+                </HBox>
+
+                <!-- Thống kê nhanh -->
+                <HBox spacing="20">
+                    <Label style="-fx-font-weight: BOLD;" text="Số ngày công:" />
+                    <Label fx:id="lblNgayCong" style="-fx-text-fill: #1B3A2D; -fx-font-weight: BOLD; -fx-font-size: 15px;" text="0" />
+                    <Label style="-fx-font-weight: BOLD;" text="Tổng giờ làm:" />
+                    <Label fx:id="lblTongGio" style="-fx-text-fill: #1565C0; -fx-font-weight: BOLD; -fx-font-size: 15px;" text="0" />
+                </HBox>
+
+                <!-- Bảng lịch sử -->
+                <TableView fx:id="tableLichSu" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colLSNgay" prefWidth="120" text="Ngày" />
+                        <TableColumn fx:id="colLSGioVao" prefWidth="100" text="Giờ Vào" />
+                        <TableColumn fx:id="colLSGioRa" prefWidth="100" text="Giờ Ra" />
+                        <TableColumn fx:id="colLSSoGio" prefWidth="100" text="Số Giờ" />
+                    </columns>
+                    <placeholder>
+                        <Label style="-fx-text-fill: #90A4AE;" text="Chọn nhân viên và tháng để xem lịch sử" />
+                    </placeholder>
+                </TableView>
+
+            </VBox>
+        </Tab>
+
+    </TabPane>
+
+</VBox>

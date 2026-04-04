@@ -38,27 +38,30 @@ public class NhanVien {
     private String trangThai;
 
     @ManyToOne
-    @JoinColumn(name = "MaPhongBan",columnDefinition = "NVARCHAR(255)")
+    @JoinColumn(name = "MaPhongBan",columnDefinition = "NVARCHAR(50)")
     private PhongBan phongBan;
 
     @ManyToOne
-    @JoinColumn(name = "MaHD",columnDefinition = "NVARCHAR(255)")
+    @JoinColumn(name = "MaHD",columnDefinition = "NVARCHAR(50)")
     private HopDong hopDong;
 
-    @OneToMany(mappedBy = "nhanVien")
+    @OneToMany(mappedBy = "nhanVien" ,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<BoNhiem> danhSachBoNhiem;
 
 
-    @OneToMany(mappedBy = "nhanVien")
+    @OneToMany(mappedBy = "nhanVien",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ThamGia> danhSachThamGia;
 
-    @OneToMany(mappedBy = "nhanVien")
+    @OneToMany(mappedBy = "nhanVien",fetch =  FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Cham_Cong> danhSachChamCong;
+
+    @OneToMany(mappedBy = "nhanVien",fetch =  FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<SaLary> danhSachLuong;
 
     public NhanVien() {
     }
 
-    public NhanVien(String maNV, String hoTen, LocalDate ngaySinh, String gioiTinh, String cccd, String diaChi, String email, String sdt, LocalDate ngayVaoLam, String trangThai, PhongBan phongBan, HopDong hopDong, List<BoNhiem> danhSachBoNhiem, List<ThamGia> danhSachThamGia, List<Cham_Cong> danhSachChamCong) {
+    public NhanVien(String maNV, String hoTen, LocalDate ngaySinh, String gioiTinh, String cccd, String diaChi, String email, String sdt, LocalDate ngayVaoLam, String trangThai, PhongBan phongBan, HopDong hopDong, List<BoNhiem> danhSachBoNhiem, List<ThamGia> danhSachThamGia, List<Cham_Cong> danhSachChamCong, List<SaLary> danhSachLuong) {
         this.maNV = maNV;
         this.hoTen = hoTen;
         this.ngaySinh = ngaySinh;
@@ -74,6 +77,15 @@ public class NhanVien {
         this.danhSachBoNhiem = danhSachBoNhiem;
         this.danhSachThamGia = danhSachThamGia;
         this.danhSachChamCong = danhSachChamCong;
+        this.danhSachLuong = danhSachLuong;
+    }
+
+    public List<SaLary> getDanhSachLuong() {
+        return danhSachLuong;
+    }
+
+    public void setDanhSachLuong(List<SaLary> danhSachLuong) {
+        this.danhSachLuong = danhSachLuong;
     }
 
     public List<Cham_Cong> getDanhSachChamCong() {
@@ -194,6 +206,22 @@ public class NhanVien {
 
     public void setDanhSachThamGia(List<ThamGia> danhSachThamGia) {
         this.danhSachThamGia = danhSachThamGia;
+    }
+
+    public double getPhuCapHienTai() {
+        if (danhSachBoNhiem == null || danhSachBoNhiem.isEmpty()) {
+            return 0;
+        }
+
+        // Logic: Tìm bản ghi bổ nhiệm đang có hiệu lực (DenNgay == null)
+        for (BoNhiem bn : danhSachBoNhiem) {
+            if (bn.getDenNgay() == null) {
+                return bn.getChucVu().getPhuCap();
+            }
+        }
+
+        // Nếu tất cả đã kết thúc, có thể lấy bản ghi có ngày gần nhất
+        return 0;
     }
 
     @Override

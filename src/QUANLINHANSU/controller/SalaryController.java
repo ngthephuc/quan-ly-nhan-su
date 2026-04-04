@@ -1,131 +1,180 @@
 package QUANLINHANSU.controller;
 
-import QUANLINHANSU.model.SaLary;
-import QUANLINHANSU.model.NhanVien;
-import QUANLINHANSU.model.ChucVu;
+import QUANLINHANSU.model.*;
+import QUANLINHANSU.service.Cham_CongService;
+import QUANLINHANSU.service.NhanVienService;
 import QUANLINHANSU.service.SalaryService;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
-public class SalaryController {
-
-    @FXML private TextField txtMaNV, txtLuongCB, txtPhuCap, txtSoNgayCong, txtPhongBan, txtHeSoLuong;
+public class SalaryController implements Initializable {
+    @FXML private TextField txtMaNV, txtLuongCB, txtPhuCap, txtSoNgayCong, txtPhongBan, txtHeSoLuong,txtMaPhieuLuong,txtNam;
     @FXML private Label lblHoTen, lblLuong;
     @FXML private TableView<SaLary> tblSalary;
-    @FXML private TableColumn<SaLary, String> colID, colHoTen, colPhongBan;
-    @FXML private TableColumn<SaLary, Double> colChamCong, colLuong;
+    @FXML private TableColumn<SaLary, String> colID, colHoTen, colPhongBan, colMaPhieuLuong;
+    @FXML private TableColumn<SaLary, String> colChamCong, colLuong;
+
+    @FXML private ComboBox<NhanVien> cbNhanVien;
+    @FXML private ComboBox<Integer> cbThang;
+
 
     private final SalaryService salaryService = new SalaryService();
+    private final NhanVienService nhanVienService = new NhanVienService();
+    private final Cham_CongService  chamCongService = new Cham_CongService();
 
-    @FXML
-    public void initialize() {
-        // 1. Ánh xạ cột ID (Mã NV)
-        colID.setCellValueFactory(new PropertyValueFactory<>("maNV"));
+    LocalDate date = LocalDate.now();
 
-        // 2. Ánh xạ Họ tên
-        colHoTen.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getNhanVien() != null ? cell.getValue().getNhanVien().getHoTen() : "N/A"));
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setupColums();
+        setupComboBox();
+        loadTable();
 
-        // 3. CHIẾN THUẬT: Hiển thị Chức vụ (từ Bổ nhiệm) + Phòng ban lên TableView
-        colPhongBan.setCellValueFactory(cell -> {
-            NhanVien nv = cell.getValue().getNhanVien();
-            if (nv != null) {
-                String tenCV = (nv.getChucVuHienTai() != null) ? nv.getChucVuHienTai().getTenCV() : "Chưa CV";
-                String tenPB = (nv.getPhongBan() != null) ? nv.getPhongBan().getTenPb() : "Chưa PB";
-                return new SimpleStringProperty(tenCV + " - " + tenPB);
-            }
-            return new SimpleStringProperty("N/A");
-        });
-
-        colChamCong.setCellValueFactory(new PropertyValueFactory<>("soNgayCong"));
-        colLuong.setCellValueFactory(new PropertyValueFactory<>("tongLuongThucNhan"));
-
-        // 4. Định dạng tiền tệ cho cột Lương
-        colLuong.setCellFactory(column -> new TableCell<SaLary, Double>() {
-            @Override protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) setText(null);
-                else setText(String.format("%,.0f", item));
-            }
-        });
-
-        showSalaryData();
+        cbNhanVien.setOnAction(event -> hienThiDuLieuTuongDong());
+        cbThang.setValue(date.getMonthValue());
+        txtNam.setText(date.getYear() + "");
     }
 
-    private void updateUI(SaLary s) {
-        if (s == null) return;
-        txtMaNV.setText(s.getMaNV());
-        txtLuongCB.setText(String.format("%.0f", s.getLuongCoBan()));
 
-        // Lấy phụ cấp từ bản ghi lương, nếu = 0 thì thử lấy từ chức vụ hiện tại
-        double phuCapVal = s.getPhuCapChucVu();
-        if (phuCapVal == 0 && s.getNhanVien() != null && s.getNhanVien().getChucVuHienTai() != null) {
-            phuCapVal = s.getNhanVien().getChucVuHienTai().getPhuCap();
-        }
-        txtPhuCap.setText(String.format("%.0f", phuCapVal));
-
-        txtSoNgayCong.setText(String.valueOf(s.getSoNgayCong()));
-        lblLuong.setText(String.format("%,.0f VNĐ", s.getTongLuongThucNhan()));
-
-        if (s.getNhanVien() != null) {
-            NhanVien nv = s.getNhanVien();
-            // Hiển thị tên kèm chức vụ cho chuyên nghiệp
-            String chucVuStr = (nv.getChucVuHienTai() != null) ? " [" + nv.getChucVuHienTai().getTenCV() + "]" : "";
-            lblHoTen.setText(nv.getHoTen() + chucVuStr);
-
-            if (nv.getPhongBan() != null) {
-                txtPhongBan.setText(nv.getPhongBan().getTenPb());
-                txtHeSoLuong.setText(String.valueOf(nv.getPhongBan().getHeSoLuong()));
-            }
-        }
+    private void setupColums(){
+        colID.setCellValueFactory(c ->
+                new SimpleStringProperty(c.getValue().getNhanVien().getMaNV()));
+        colHoTen.setCellValueFactory(c ->
+                new SimpleStringProperty(c.getValue().getNhanVien().getHoTen()));
+        colPhongBan.setCellValueFactory(c ->
+                new SimpleStringProperty(c.getValue().getNhanVien().getPhongBan().getTenPb()));
+        colChamCong.setCellValueFactory(c ->
+                new SimpleStringProperty(String.valueOf(c.getValue().getSoNgayCong())));
+        colLuong.setCellValueFactory(c ->
+                new SimpleStringProperty(String.valueOf(c.getValue().getTongLuongThucNhan())));
+        colMaPhieuLuong.setCellValueFactory(c ->
+                new SimpleStringProperty(c.getValue().getMaPhieuLuong()));
     }
 
-    @FXML
-    void handleCalculateSalary(ActionEvent event) {
-        String maNV = txtMaNV.getText().trim();
-        if (maNV.isEmpty()) return;
+    private void setupComboBox(){
+        List<NhanVien> dsNV = nhanVienService.layDangLam();
+        cbNhanVien.setItems(FXCollections.observableArrayList(dsNV));
+        cbNhanVien.setCellFactory(lv -> new ListCell<>() {
+            @Override protected void updateItem(NhanVien nv, boolean empty) {
+                super.updateItem(nv, empty);
+                setText(empty || nv == null ? null : nv.getMaNV() + " - " + nv.getHoTen());
+            }
+        });
+        cbNhanVien.setButtonCell(new ListCell<>() {
+            @Override protected void updateItem(NhanVien nv, boolean empty) {
+                super.updateItem(nv, empty);
+                setText(empty || nv == null ? null : nv.getMaNV() + " - " + nv.getHoTen());
+            }
+        });
+    }
+
+    private void loadTable() {
         try {
-            // Tính toán và lưu
-            salaryService.tinhVaLuuTuDong(maNV, LocalDate.now().getMonthValue(), LocalDate.now().getYear());
-
-            // Reload bảng và cập nhật Form
-            showSalaryData();
-            updateUI(salaryService.timTheoMa(maNV));
-
-            new Alert(Alert.AlertType.INFORMATION, "Tính lương thành công!").show();
+            // Lấy toàn bộ lịch sử đã tính lương của tất cả NV đang làm
+            List<NhanVien> dsNV = nhanVienService.layDangLam();
+            List<SaLary> dstinhLuong = dsNV.stream()
+                    .flatMap(nv -> salaryService.layLichSuTinhLuong(nv.getMaNV()).stream())
+                    .collect(Collectors.toList());
+            tblSalary.setItems(FXCollections.observableArrayList(dstinhLuong));
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Lỗi: " + e.getMessage()).show();
+            e.printStackTrace();
         }
     }
 
-    @FXML
-    void handleTableClick(MouseEvent event) {
-        SaLary selected = tblSalary.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            updateUI(selected);
-        }
-    }
 
-    public void showSalaryData() {
+    /**
+     * HÀM QUAN TRỌNG: Tự động lôi dữ liệu từ Database lên Form khi nhập mã NV
+     */
+    public void tinhLuong() {
+        NhanVien nv = cbNhanVien.getValue();
+        String maPhieu = txtMaPhieuLuong.getText();
+        double soNgayCong = Double.parseDouble(txtSoNgayCong.getText().replaceAll("[^0-9.]", ""));
+        if (nv == null) { showAlert(Alert.AlertType.WARNING, "Vui lòng chọn nhân viên!"); return; }
+
         try {
-            List<SaLary> list = salaryService.layTatCa();
-            tblSalary.setItems(FXCollections.observableArrayList(list));
-        } catch (Exception e) { e.printStackTrace(); }
+            salaryService.tinhVaLuuTuDong(nv.getMaNV(),soNgayCong,maPhieu);
+            showAlert(Alert.AlertType.INFORMATION, "Tính lương thành công!");
+            handleClearForm();
+            loadTable();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, e.getMessage());
+        }
+    }
+
+
+
+
+
+    @FXML
+    public void chonSalary() {
+       SaLary sa = tblSalary.getSelectionModel().getSelectedItem();
+        if (sa == null) return;
+        // Điền NV vào ComboBox
+        cbNhanVien.getItems().stream()
+                .filter(nv -> nv.getMaNV().equals(sa.getNhanVien().getMaNV()))
+                .findFirst().ifPresent(cbNhanVien::setValue);
+        txtPhongBan.setText(sa.getNhanVien().getPhongBan().getTenPb());
+        txtHeSoLuong.setText(sa.getNhanVien().getPhongBan().getHeSoLuong().toString());
+        txtLuongCB.setText(String.valueOf(sa.getLuongCoBan()));
+        txtPhuCap.setText(String.format("%.0f", sa.getPhuCapChucVu()));
+        txtSoNgayCong.setText(String.format("%.0f", sa.getSoNgayCong()));
+        lblLuong.setText(String.valueOf(sa.getTongLuongThucNhan()));
+        txtMaPhieuLuong.setText(sa.getMaPhieuLuong());
     }
 
     @FXML
-    void handleClearForm(ActionEvent event) {
-        txtMaNV.clear(); txtLuongCB.clear(); txtPhuCap.clear(); txtSoNgayCong.clear();
-        txtPhongBan.clear(); txtHeSoLuong.clear();
-        lblHoTen.setText("---");
+    void handleClearForm() {
+        cbNhanVien.setValue(null);
+        txtLuongCB.clear();
+        txtPhuCap.clear();
+        txtSoNgayCong.clear();
+        txtPhongBan.clear();
+        txtHeSoLuong.clear();
         lblLuong.setText("0 VNĐ");
         tblSalary.getSelectionModel().clearSelection();
+    }
+
+
+    private void hienThiDuLieuTuongDong(){
+        NhanVien nv = cbNhanVien.getValue();
+        if(nv == null) return;
+        try{
+            txtPhongBan.setText(nv.getPhongBan() != null ? nv.getPhongBan().getTenPb() : "N/A");
+            txtHeSoLuong.setText(nv.getPhongBan() != null ? String.valueOf(nv.getPhongBan().getHeSoLuong()) : "1.0");
+            txtLuongCB.setText(nv.getHopDong() != null ? String.format("%.0f", nv.getHopDong().getLuongCoBan()) : "0");
+            txtPhuCap.setText(String.format("%.0f",nv.getPhuCapHienTai()));
+            cbThang.setValue(LocalDate.now().getMonthValue());
+            txtNam.setText(LocalDate.now().getYear()+"");
+            demNgayCong(nv);
+            lblLuong.setText("Đang chờ tính...");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void demNgayCong(NhanVien nv){
+        try {
+            int thang = cbThang.getValue();
+            int nam   = Integer.parseInt(txtNam.getText().trim());
+            long ngayCong   = chamCongService.demNgayCong(nv.getMaNV(), thang, nam);
+            txtSoNgayCong.setText(ngayCong + " ngày");
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, e.getMessage());
+        }
+    }
+    private void showAlert(Alert.AlertType type, String message) {
+        Alert alert = new Alert(type);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

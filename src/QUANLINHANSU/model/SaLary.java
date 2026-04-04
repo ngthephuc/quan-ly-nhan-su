@@ -8,12 +8,11 @@ import java.io.Serializable;
 public class SaLary implements Serializable {
 
     @Id
-    @Column(name = "MaNV")
-    private String maNV;
+    @Column(name = "MaPhieuLuong", columnDefinition = "NVARCHAR(50)")
+    private String maPhieuLuong;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @MapsId
-    @JoinColumn(name = "MaNV")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "MaNV" ,columnDefinition = "NVARCHAR(50)" )
     private NhanVien nhanVien;
 
     @Column(name = "luongCoBan")
@@ -30,17 +29,16 @@ public class SaLary implements Serializable {
 
     public SaLary() {}
 
-    // CONSTRUCTOR CHIẾN THUẬT: Gán ID ngay lập tức để tránh Null Identifier
-    public SaLary(NhanVien nv) {
-        this.nhanVien = nv;
-        if (nv != null) {
-            this.maNV = nv.getMaNV();
-        }
+    // Getter và Setter
+
+    public String getMaPhieuLuong() {
+        return maPhieuLuong;
     }
 
-    // Getter và Setter
-    public String getMaNV() { return maNV; }
-    public void setMaNV(String maNV) { this.maNV = maNV; }
+    public void setMaPhieuLuong(String maPhieuLuong) {
+        this.maPhieuLuong = maPhieuLuong;
+    }
+
     public NhanVien getNhanVien() { return nhanVien; }
     public void setNhanVien(NhanVien nhanVien) { this.nhanVien = nhanVien; }
     public double getLuongCoBan() { return luongCoBan; }

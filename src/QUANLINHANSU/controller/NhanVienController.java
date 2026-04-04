@@ -294,7 +294,6 @@ public class NhanVienController implements Initializable {
         nv.setEmail(txtEmail.getText().trim());
         nv.setPhongBan(cbPhongBan.getValue());
         nv.setHopDong(cbHopDong.getValue());
-
         return nv;
     }
 
