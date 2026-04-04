@@ -52,7 +52,7 @@ public class NhanVien {
     @OneToMany(mappedBy = "nhanVien",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ThamGia> danhSachThamGia;
 
-    @OneToMany(mappedBy = "nhanVien",fetch =  FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "nhanVien",fetch =  FetchType.EAGER)
     private List<Cham_Cong> danhSachChamCong;
 
     @OneToMany(mappedBy = "nhanVien",fetch =  FetchType.EAGER, cascade = CascadeType.ALL)
