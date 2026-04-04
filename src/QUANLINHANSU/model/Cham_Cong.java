@@ -20,17 +20,16 @@ public class Cham_Cong {
 
     @Column(name = "GioRa")
     private LocalTime gioRa;
-    @Column(name = "SoCong")
-    private double socong;
+
 
     public Cham_Cong() {}
 
-    public Cham_Cong(ChamCongId id, NhanVien nhanVien, LocalTime gioVao, LocalTime gioRa,double socong) {
+    public Cham_Cong(ChamCongId id, NhanVien nhanVien, LocalTime gioVao, LocalTime gioRa) {
         this.id = id;
         this.nhanVien = nhanVien;
         this.gioVao = gioVao;
         this.gioRa = gioRa;
-        this.socong=socong;
+
     }
 
     public ChamCongId getId() {
@@ -65,11 +64,4 @@ public class Cham_Cong {
         this.gioRa = gioRa;
     }
 
-    public double getSocong() {
-        return socong;
-    }
-
-    public void setSocong(double socong) {
-        this.socong = socong;
-    }
 }

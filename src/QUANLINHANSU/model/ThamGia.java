@@ -13,7 +13,7 @@ public class ThamGia {
     private NhanVien nhanVien;
 
     @ManyToOne
-    @JoinColumn(name = "MaDA",columnDefinition = "NVARCHAR(255)")
+    @JoinColumn(name = "MaDA",columnDefinition = "NVARCHAR(50)")
     private Du_An duAn;
 
     @Column(name = "VaiTro",columnDefinition = "NVARCHAR(255)")

@@ -71,4 +71,5 @@ public class NhanVienRepository extends BaseRepository<NhanVien> {
                 .getSingleResult();
     }
 
+
 }

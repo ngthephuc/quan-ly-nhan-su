@@ -40,7 +40,7 @@ public class DashBoardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        setupColumns();
+        setupColumns();
         loadData();
     }
 

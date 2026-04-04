@@ -1,44 +1,47 @@
 package QUANLINHANSU.repository;
 
-import QUANLINHANSU.model.SaLary;
+import QUANLINHANSU.model.*;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import java.util.List;
 
 public class SalaryRepository extends BaseRepository<SaLary> {
-    public SalaryRepository() {
-        super(SaLary.class);
-    }
+    public SalaryRepository() { super(SaLary.class); }
 
-    public List<SaLary> layTatCa(EntityManager em) {
-        // JPQL: Truy vấn dựa trên tên Class và tên biến trong Java
-        // JOIN FETCH: Gom hết dữ liệu liên quan về 1 lần (Eager Loading thủ công)
-        String jpql = "SELECT DISTINCT s FROM SaLary s " +
-                "JOIN FETCH s.nhanVien nv " +
-                "LEFT JOIN FETCH nv.danhSachBoNhiem bn " +
-                "LEFT JOIN FETCH bn.chucVu " +
-                "LEFT JOIN FETCH nv.phongBan " +
-                "LEFT JOIN FETCH nv.hopDong";
-
-        return em.createQuery(jpql, SaLary.class).getResultList();
-    }
-
-    public SaLary timTheoMa(EntityManager em, String maNV) {
-        String jpql = "SELECT s FROM SaLary s " +
-                "JOIN FETCH s.nhanVien nv " +
-                "LEFT JOIN FETCH nv.danhSachBoNhiem bn " +
-                "LEFT JOIN FETCH bn.chucVu " +
-                "WHERE s.maNV = :ma";
+    public NhanVien timNhanVienKemChiTiet(EntityManager em, String maNV) {
         try {
-            return em.createQuery(jpql, SaLary.class)
+            String jpql = "SELECT n FROM NhanVien n LEFT JOIN FETCH n.hopDong LEFT JOIN FETCH n.phongBan WHERE n.maNV = :ma";
+            return em.createQuery(jpql, NhanVien.class).setParameter("ma", maNV).getSingleResult();
+        } catch (NoResultException e) { return null; }
+    }
+
+    public double layPhuCapMoiNhat(EntityManager em, String maNV) {
+        try {
+            String jpql = "SELECT bn.chucVu.phuCap FROM BoNhiem bn WHERE bn.nhanVien.maNV = :ma ORDER BY bn.id.tuNgay DESC";
+            List<Double> results = em.createQuery(jpql, Double.class).setParameter("ma", maNV).setMaxResults(1).getResultList();
+            return (results.isEmpty() || results.get(0) == null) ? 0.0 : results.get(0);
+        } catch (Exception e) { return 0.0; }
+    }
+
+    // HÀM QUAN TRỌNG: Đếm số ngày công thực tế trong Database
+    public double tinhTongCongTuDb(EntityManager em, String maNV) {
+        try {
+            // Giả sử mỗi dòng trong bảng ChamCong là 1 ngày làm việc
+            String jpql = "SELECT COUNT(cc) FROM ChamCong cc WHERE cc.nhanVien.maNV = :ma";
+            Long count = em.createQuery(jpql, Long.class)
                     .setParameter("ma", maNV)
                     .getSingleResult();
-        } catch (Exception e) {
-            return null;
-        }
+            return (count != null) ? count.doubleValue() : 0.0;
+        } catch (Exception e) { return 0.0; }
     }
 
-    public void xoaTheoMaNV(EntityManager em, String maNV) {
-        SaLary s = em.find(SaLary.class, maNV);
-        if (s != null) em.remove(s);
+    public List<SaLary> layTatCaKemChiTiet(EntityManager em) {
+        return em.createQuery("SELECT s FROM SaLary s JOIN FETCH s.nhanVien n LEFT JOIN FETCH n.phongBan", SaLary.class).getResultList();
+    }
+
+    public List<SaLary> layLichSuTinhLuong(EntityManager em , String maNV) {
+        return em.createQuery("SELECT l FROM SaLary l WHERE l.nhanVien.maNV = :maNV", SaLary.class)
+                .setParameter("maNV", maNV)
+                .getResultList();
     }
 }

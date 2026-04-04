@@ -55,7 +55,7 @@
                                                 <FontAwesomeIconView fill="WHITE" glyphName="USER_PLUS" size="22" />
                                             </graphic>
                                         </Button>
-                                        <Button fx:id="butLuong" layoutX="11.0" layoutY="392.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Lương Nhân Viên" textFill="WHITE">
+                                        <Button fx:id="butLuong" layoutX="11.0" layoutY="392.0" mnemonicParsing="false" onAction="#switchLuong" prefHeight="35.0" prefWidth="180.0" styleClass="nav_btn" stylesheets="@../CSS.css" text="Lương Nhân Viên" textFill="WHITE">
                                             <graphic>
                                                 <FontAwesomeIconView fill="WHITE" glyphName="MONEY" size="22" />
                                             </graphic>
