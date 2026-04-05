@@ -3,9 +3,11 @@ package QUANLINHANSU.controller;
 import QUANLINHANSU.model.BoNhiem;
 import QUANLINHANSU.model.ChucVu;
 import QUANLINHANSU.model.NhanVien;
+import QUANLINHANSU.model.PhongBan;
 import QUANLINHANSU.service.BoNhiemService;
 import QUANLINHANSU.service.ChucVuService;
 import QUANLINHANSU.service.NhanVienService;
+import QUANLINHANSU.service.PhongBanService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -143,6 +145,7 @@ public class BoNhiemController implements Initializable {
         }
     }
 
+    //tp
     @FXML
     public void boNhiem() {
         NhanVien nv = cbNhanVien.getValue();
@@ -155,14 +158,52 @@ public class BoNhiemController implements Initializable {
         if (qd.isEmpty()) { showAlert(Alert.AlertType.WARNING, "Vui lòng nhập số quyết định!"); return; }
 
         try {
-            boNhiemService.boNhiem(nv.getMaNV(), cv.getMaCV(),tuNgay,qd);
+            // 👉 1. Bổ nhiệm như cũ
+            boNhiemService.boNhiem(nv.getMaNV(), cv.getMaCV(), tuNgay, qd);
+
+            // 👉 2. XỬ LÝ TRƯỞNG PHÒNG
+            if (cv.getTenCV().equalsIgnoreCase("Trưởng phòng")) {
+
+                PhongBan pb = nv.getPhongBan();
+
+                if (pb != null) {
+                    // Ghi đè luôn trưởng phòng cũ
+                    pb.setTruongPhong(nv);
+
+                    // Lưu lại DB
+                    new PhongBanService().capNhatPhongBan(pb);
+                }
+            }
+
             showAlert(Alert.AlertType.INFORMATION, "Bổ nhiệm thành công!");
             lamSach();
             loadTable();
+
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, e.getMessage());
         }
     }
+    //
+//    @FXML
+//    public void boNhiem() {
+//        NhanVien nv = cbNhanVien.getValue();
+//        ChucVu cv   = cbChucVu.getValue();
+//        LocalDate tuNgay = dpTuNgay.getValue();
+//        String qd   = txtQuyetDinh.getText().trim();
+//
+//        if (nv == null) { showAlert(Alert.AlertType.WARNING, "Vui lòng chọn nhân viên!"); return; }
+//        if (cv == null) { showAlert(Alert.AlertType.WARNING, "Vui lòng chọn chức vụ!"); return; }
+//        if (qd.isEmpty()) { showAlert(Alert.AlertType.WARNING, "Vui lòng nhập số quyết định!"); return; }
+//
+//        try {
+//            boNhiemService.boNhiem(nv.getMaNV(), cv.getMaCV(),tuNgay,qd);
+//            showAlert(Alert.AlertType.INFORMATION, "Bổ nhiệm thành công!");
+//            lamSach();
+//            loadTable();
+//        } catch (Exception e) {
+//            showAlert(Alert.AlertType.ERROR, e.getMessage());
+//        }
+//    }
 
     @FXML
     public void ketThuc() {

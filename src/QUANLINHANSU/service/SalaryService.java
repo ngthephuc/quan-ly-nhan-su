@@ -10,7 +10,9 @@ import java.util.List;
 public class SalaryService {
     private final SalaryRepository salaryRepo = new SalaryRepository();
     private final NhanVienRepository nhanVienRepo = new NhanVienRepository();
-
+    //tp
+    private final BoNhiemRepository boNhiemRepo = new BoNhiemRepository();
+    //
     // 1. Lấy nhân viên chi tiết để đổ lên Form
     public NhanVien layThongTinForm(String maNV) {
         EntityManager em = JPAUtil.getEntityManager();
@@ -69,7 +71,11 @@ public class SalaryService {
 
             double heSoLuong = nvDB.getPhongBan().getHeSoLuong();
             double luongCB = nvDB.getHopDong().getLuongCoBan();
-            double phuCap = nvDB.getPhuCapHienTai();
+//            double phuCap = nvDB.getPhuCapHienTai();
+            //tp
+            BoNhiem bn = boNhiemRepo.layChucVuHienTai(em, maNV);
+            double phuCap = (bn != null) ? bn.getChucVu().getPhuCap() : 0;
+            //
             // Công thức: ((Lương CB * Hệ số) / 26) * Công thực tế + Phụ cấp
             double thucNhan = ((luongCB * heSoLuong) / 26.0) * soNgayCong + phuCap;
 

@@ -57,24 +57,44 @@ public class PhongBanController implements Initializable {
         colSoThanhVien.setCellValueFactory(c ->
                 new SimpleStringProperty(String.valueOf(c.getValue().getSoThanhVien())));
     }
+//tp
+private void loadTable() {
+    try {
+        List<PhongBan> ds = phongBanService.layTatCa();
 
-    private void loadTable() {
-        try {
-            List<PhongBan> ds = phongBanService.layTatCa();
+        List<PhongBanRow> rows = ds.stream().map(pb -> {
+            long soTV = nhanVienService.demNhanVienTheoPhongBan(pb.getMaPb());
 
-            // Với mỗi phòng ban → lấy thêm Trưởng Phòng + Số Thành Viên
-            List<PhongBanRow> rows = ds.stream().map(pb -> {
-                NhanVien truong = nhanVienService.layTruongPhong(pb.getMaPb());
-                long soTV = nhanVienService.demNhanVienTheoPhongBan(pb.getMaPb());
-                String tenTruong = truong != null ? truong.getHoTen() : "(Chưa có)";
-                return new PhongBanRow(pb, tenTruong, soTV);
-            }).collect(Collectors.toList());
+            String tenTruong = pb.getTruongPhong() != null
+                    ? pb.getTruongPhong().getHoTen()
+                    : "(Chưa có)";
 
-            tablePhongBan.setItems(FXCollections.observableArrayList(rows));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            return new PhongBanRow(pb, tenTruong, soTV);
+        }).collect(Collectors.toList());
+
+        tablePhongBan.setItems(FXCollections.observableArrayList(rows));
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
+//
+//    private void loadTable() {
+//        try {
+//            List<PhongBan> ds = phongBanService.layTatCa();
+//
+//            // Với mỗi phòng ban → lấy thêm Trưởng Phòng + Số Thành Viên
+//            List<PhongBanRow> rows = ds.stream().map(pb -> {
+//                NhanVien truong = nhanVienService.layTruongPhong(pb.getMaPb());
+//                long soTV = nhanVienService.demNhanVienTheoPhongBan(pb.getMaPb());
+//                String tenTruong = truong != null ? truong.getHoTen() : "(Chưa có)";
+//                return new PhongBanRow(pb, tenTruong, soTV);
+//            }).collect(Collectors.toList());
+//
+//            tablePhongBan.setItems(FXCollections.observableArrayList(rows));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     // ===================== SỰ KIỆN =====================
 

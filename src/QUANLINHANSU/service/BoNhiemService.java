@@ -2,6 +2,8 @@ package QUANLINHANSU.service;
 
 import QUANLINHANSU.model.BoNhiem;
 import QUANLINHANSU.model.BoNhiemId;
+import QUANLINHANSU.model.NhanVien;
+import QUANLINHANSU.model.PhongBan;
 import QUANLINHANSU.repository.BoNhiemRepository;
 import QUANLINHANSU.repository.ChucVuRepository;
 import QUANLINHANSU.repository.NhanVienRepository;
@@ -48,17 +50,47 @@ public class BoNhiemService {
                 cu.setDenNgay(LocalDate.now());
                 boNhiemRepo.capNhat(em, cu);
             }
+            //tp
+            // 🔥 tránh trùng khóa (maNV + maCV + tuNgay)
+            while (em.find(BoNhiem.class, new BoNhiemId(maNV, maCV, tuNgay)) != null) {
+                tuNgay = tuNgay.plusDays(1); // tự động +1 ngày
+            }
 
-            // Tạo bổ nhiệm mới
             BoNhiemId id = new BoNhiemId(maNV, maCV, tuNgay);
+
+// 🔥 thêm đoạn này
+//            BoNhiem tonTai = em.find(BoNhiem.class, id);
+//            if (tonTai != null) {
+//                throw new RuntimeException("Bổ nhiệm đã tồn tại!");
+//            }
+            // 🔥 check chức vụ hiện tại (không check lịch sử nữa)
+            BoNhiem hienTai = boNhiemRepo.layChucVuHienTai(em, maNV);
+
+            if (hienTai != null && hienTai.getChucVu().getMaCV().equals(maCV)) {
+                throw new RuntimeException("Nhân viên đang giữ chức vụ này!");
+            }
+
+// tạo mới
             BoNhiem boNhiemMoi = new BoNhiem(
                     id,
                     nhanVienRepo.timById(em, maNV),
                     chucVuRepo.timById(em, maCV),
-                    null,   // denNgay = null → đang giữ chức vụ
+                    null,
                     quyetDinhSo
             );
+
             boNhiemRepo.them(em, boNhiemMoi);
+            //
+            // Tạo bổ nhiệm mới
+//            BoNhiemId id = new BoNhiemId(maNV, maCV, tuNgay);
+//            BoNhiem boNhiemMoi = new BoNhiem(
+//                    id,
+//                    nhanVienRepo.timById(em, maNV),
+//                    chucVuRepo.timById(em, maCV),
+//                    null,   // denNgay = null → đang giữ chức vụ
+//                    quyetDinhSo
+//            );
+//            boNhiemRepo.them(em, boNhiemMoi);
             tx.commit();
 
         } catch (Exception e) {
@@ -68,29 +100,70 @@ public class BoNhiemService {
             em.close();
         }
     }
+//tp
+public void ketThucChucVu(String maNV) {
+    EntityManager em = JPAUtil.getEntityManager();
+    EntityTransaction tx = em.getTransaction();
+    try {
+        tx.begin();
 
-    // ===================== KẾT THÚC CHỨC VỤ =====================
-    public void ketThucChucVu(String maNV) {
-        EntityManager em = JPAUtil.getEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        try {
-            tx.begin();
+        BoNhiem bn = boNhiemRepo.layChucVuHienTai(em, maNV);
+        if (bn == null)
+            throw new IllegalStateException("Nhân viên '" + maNV + "' không có chức vụ nào đang giữ!");
 
-            BoNhiem bn = boNhiemRepo.layChucVuHienTai(em, maNV);
-            if (bn == null)
-                throw new IllegalStateException("Nhân viên '" + maNV + "' không có chức vụ nào đang giữ!");
+        // 🔥 1. XỬ LÝ TRƯỞNG PHÒNG TRƯỚC
+        if (bn.getChucVu().getTenCV().equalsIgnoreCase("Trưởng phòng")) {
 
-            bn.setDenNgay(LocalDate.now());
-            boNhiemRepo.capNhat(em, bn);
-            tx.commit();
+            NhanVien nv = bn.getNhanVien();
 
-        } catch (Exception e) {
-            if (tx.isActive()) tx.rollback();
-            throw new RuntimeException("Lỗi khi kết thúc chức vụ: " + e.getMessage(), e);
-        } finally {
-            em.close();
+            if (nv.getPhongBan() != null) {
+                PhongBan pb = nv.getPhongBan();
+
+                if (pb.getTruongPhong() != null &&
+                        pb.getTruongPhong().getMaNV().equals(nv.getMaNV())) {
+
+                    pb.setTruongPhong(null);
+                    em.merge(pb);
+                }
+            }
         }
+
+        // 🔥 2. SAU ĐÓ MỚI KẾT THÚC CHỨC VỤ
+        bn.setDenNgay(LocalDate.now());
+        boNhiemRepo.capNhat(em, bn);
+
+        tx.commit();
+
+    } catch (Exception e) {
+        if (tx.isActive()) tx.rollback();
+        throw new RuntimeException("Lỗi khi kết thúc chức vụ: " + e.getMessage(), e);
+    } finally {
+        em.close();
     }
+}
+//
+//    // ===================== KẾT THÚC CHỨC VỤ =====================
+//    public void ketThucChucVu(String maNV) {
+//        EntityManager em = JPAUtil.getEntityManager();
+//        EntityTransaction tx = em.getTransaction();
+//        try {
+//            tx.begin();
+//
+//            BoNhiem bn = boNhiemRepo.layChucVuHienTai(em, maNV);
+//            if (bn == null)
+//                throw new IllegalStateException("Nhân viên '" + maNV + "' không có chức vụ nào đang giữ!");
+//
+//            bn.setDenNgay(LocalDate.now());
+//            boNhiemRepo.capNhat(em, bn);
+//            tx.commit();
+//
+//        } catch (Exception e) {
+//            if (tx.isActive()) tx.rollback();
+//            throw new RuntimeException("Lỗi khi kết thúc chức vụ: " + e.getMessage(), e);
+//        } finally {
+//            em.close();
+//        }
+//    }
 
     // ===================== TRUY VẤN =====================
     public BoNhiem layChucVuHienTai(String maNV) {

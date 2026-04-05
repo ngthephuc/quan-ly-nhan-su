@@ -18,8 +18,18 @@ public class PhongBan {
 
     @Column(name = "HeSoLuong")
     private Double heSoLuong;
+//tp sửa
+    @ManyToOne
+    @JoinColumn(name = "MaTruongPhong")
+    private NhanVien truongPhong;
+    public NhanVien getTruongPhong() {
+        return truongPhong;
+    }
 
-
+    public void setTruongPhong(NhanVien truongPhong) {
+        this.truongPhong = truongPhong;
+    }
+//
     @OneToMany(mappedBy = "phongBan")
     private List<NhanVien> danhSachNhanVien;
 

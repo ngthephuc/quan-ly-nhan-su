@@ -1,6 +1,7 @@
 package QUANLINHANSU.controller;
 
 import QUANLINHANSU.model.*;
+import QUANLINHANSU.service.BoNhiemService;
 import QUANLINHANSU.service.Cham_CongService;
 import QUANLINHANSU.service.NhanVienService;
 import QUANLINHANSU.service.SalaryService;
@@ -30,7 +31,9 @@ public class SalaryController implements Initializable {
     private final SalaryService salaryService = new SalaryService();
     private final NhanVienService nhanVienService = new NhanVienService();
     private final Cham_CongService  chamCongService = new Cham_CongService();
-
+    //tp
+    private final BoNhiemService boNhiemService = new BoNhiemService();
+    //
     LocalDate date = LocalDate.now();
 
     @Override
@@ -54,8 +57,14 @@ public class SalaryController implements Initializable {
                 new SimpleStringProperty(c.getValue().getNhanVien().getPhongBan().getTenPb()));
         colChamCong.setCellValueFactory(c ->
                 new SimpleStringProperty(String.valueOf(c.getValue().getSoNgayCong())));
-        colLuong.setCellValueFactory(c ->
-                new SimpleStringProperty(String.valueOf(c.getValue().getTongLuongThucNhan())));
+//        colLuong.setCellValueFactory(c ->
+//                new SimpleStringProperty(String.valueOf(c.getValue().getTongLuongThucNhan())));
+        //tp
+        colLuong.setCellValueFactory(c -> {
+            double value = c.getValue().getTongLuongThucNhan();
+            return new SimpleStringProperty(String.format("%,.0f", value));
+        });
+        //
         colMaPhieuLuong.setCellValueFactory(c ->
                 new SimpleStringProperty(c.getValue().getMaPhieuLuong()));
     }
@@ -127,7 +136,10 @@ public class SalaryController implements Initializable {
         txtLuongCB.setText(String.valueOf(sa.getLuongCoBan()));
         txtPhuCap.setText(String.format("%.0f", sa.getPhuCapChucVu()));
         txtSoNgayCong.setText(String.format("%.0f", sa.getSoNgayCong()));
-        lblLuong.setText(String.valueOf(sa.getTongLuongThucNhan()));
+//        lblLuong.setText(String.valueOf(sa.getTongLuongThucNhan()));
+        //tp
+        lblLuong.setText(String.format("%,.0f VNĐ", sa.getTongLuongThucNhan()));
+        //
         txtMaPhieuLuong.setText(sa.getMaPhieuLuong());
     }
 
@@ -151,7 +163,17 @@ public class SalaryController implements Initializable {
             txtPhongBan.setText(nv.getPhongBan() != null ? nv.getPhongBan().getTenPb() : "N/A");
             txtHeSoLuong.setText(nv.getPhongBan() != null ? String.valueOf(nv.getPhongBan().getHeSoLuong()) : "1.0");
             txtLuongCB.setText(nv.getHopDong() != null ? String.format("%.0f", nv.getHopDong().getLuongCoBan()) : "0");
-            txtPhuCap.setText(String.format("%.0f",nv.getPhuCapHienTai()));
+//            txtPhuCap.setText(String.format("%.0f",nv.getPhuCapHienTai()));
+            //tp
+            BoNhiem bn = boNhiemService.layChucVuHienTai(nv.getMaNV());
+
+            if (bn != null) {
+                double phuCap = bn.getChucVu().getPhuCap();
+                txtPhuCap.setText(String.format("%.0f", phuCap));
+            } else {
+                txtPhuCap.setText("0");
+            }
+            //
             cbThang.setValue(LocalDate.now().getMonthValue());
             txtNam.setText(LocalDate.now().getYear()+"");
             demNgayCong(nv);
