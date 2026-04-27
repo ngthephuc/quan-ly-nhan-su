@@ -20,7 +20,9 @@ public class Du_An {
     private LocalDate ngayBatDau;
     @Column(name = "Ngayketthuc")
     private LocalDate ngayKetThuc;
-    private double soNguoiThamGia;
+//    private int soNguoiThamGia;
+@Transient
+private int soNguoiThamGia;
     @OneToMany(mappedBy = "duAn")
     private List<ThamGia> danhSachThamGia;
 
@@ -30,6 +32,7 @@ public class Du_An {
     }
     public Du_An() {
     }
+
 
 
     public Du_An(String maDA, String tenDA, double kinhPhi, LocalDate ngayBatDau, LocalDate ngayKetThuc) {
@@ -88,13 +91,15 @@ public class Du_An {
         this.ngayKetThuc = ngayKetThuc;
     }
 
-    public double getSoNguoiThamGia() {
+    public int getSoNguoiThamGia() {
         return soNguoiThamGia;
     }
-
-    public void setSoNguoiThamGia(double soNguoiThamGia) {
-        this.soNguoiThamGia = soNguoiThamGia;
-    }
+//public int getSoNguoiThamGia() {
+//    return danhSachThamGia != null ? danhSachThamGia.size() : 0;
+//}
+//    public void setSoNguoiThamGia(int soNguoiThamGia) {
+//        this.soNguoiThamGia = soNguoiThamGia;
+//    }
 
     @Override
     public String toString() {

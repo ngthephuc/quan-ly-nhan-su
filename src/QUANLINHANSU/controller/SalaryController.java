@@ -110,7 +110,8 @@ public class SalaryController implements Initializable {
         if (nv == null) { showAlert(Alert.AlertType.WARNING, "Vui lòng chọn nhân viên!"); return; }
 
         try {
-            salaryService.tinhVaLuuTuDong(nv.getMaNV(),soNgayCong,maPhieu);
+           salaryService.tinhVaLuuTuDong(nv.getMaNV(),soNgayCong,maPhieu);
+
             showAlert(Alert.AlertType.INFORMATION, "Tính lương thành công!");
             handleClearForm();
             loadTable();

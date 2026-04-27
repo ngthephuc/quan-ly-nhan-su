@@ -68,22 +68,48 @@ public class ThamGiaService {
             throw new RuntimeException(e.getMessage());
         } finally { em.close(); }
     }
+//tp
+public void xoaKhoiDuAn(String maNV, String maDA) {
+    EntityManager em = JPAUtil.getEntityManager();
+    EntityTransaction tx = em.getTransaction();
 
-    public void xoaKhoiDuAn(String maNV, String maDA) {
-        EntityManager em = JPAUtil.getEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        try {
-            tx.begin();
-            ThamGia tg = repo.timThamGia(em, maNV, maDA);
-            if (tg == null) throw new Exception("Không tìm thấy dữ liệu để xóa!");
+    try {
+        tx.begin();
 
-            repo.xoa(em, tg.getId()); // Xóa theo ID bản ghi
-            tx.commit();
-        } catch (Exception e) {
-            if (tx.isActive()) tx.rollback();
-            throw new RuntimeException(e.getMessage());
-        } finally { em.close(); }
+        int deleted = em.createQuery(
+                        "DELETE FROM ThamGia t WHERE t.nhanVien.maNV = :maNV AND t.duAn.maDA = :maDA")
+                .setParameter("maNV", maNV)
+                .setParameter("maDA", maDA)
+                .executeUpdate();
+
+        if (deleted == 0) {
+            throw new RuntimeException("Không có dữ liệu để xóa!");
+        }
+
+        tx.commit();
+    } catch (Exception e) {
+        if (tx.isActive()) tx.rollback();
+        throw new RuntimeException(e.getMessage());
+    } finally {
+        em.close();
     }
+}
+//
+//    public void xoaKhoiDuAn(String maNV, String maDA) {
+//        EntityManager em = JPAUtil.getEntityManager();
+//        EntityTransaction tx = em.getTransaction();
+//        try {
+//            tx.begin();
+//            ThamGia tg = repo.timThamGia(em, maNV, maDA);
+//            if (tg == null) throw new Exception("Không tìm thấy dữ liệu để xóa!");
+//
+//            repo.xoa(em, tg.getId()); // Xóa theo ID bản ghi
+//            tx.commit();
+//        } catch (Exception e) {
+//            if (tx.isActive()) tx.rollback();
+//            throw new RuntimeException(e.getMessage());
+//        } finally { em.close(); }
+//    }
 
 //    // ==================== CẬP NHẬT ====================
 //    public void capNhat(ThamGia tg) {

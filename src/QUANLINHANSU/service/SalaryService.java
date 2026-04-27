@@ -54,7 +54,8 @@ public class SalaryService {
     }
 
     // 5. Logic tính toán và lưu lương tự động
-    public void tinhVaLuuTuDong(String maNV,double soNgayCong ,String maPhieuLuong) {
+    public void tinhVaLuuTuDong(String maNV,double soNgayCong ,String maPhieuLuong)
+    {
 
         if (maPhieuLuong == null || maPhieuLuong.isBlank()) {
             throw new IllegalArgumentException("Mã phiếu lương không được bỏ chống!!");

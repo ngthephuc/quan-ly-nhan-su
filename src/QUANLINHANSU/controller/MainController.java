@@ -1,13 +1,18 @@
 package QUANLINHANSU.controller;
 
+import QUANLINHANSU.util.SessionManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,14 +46,21 @@ public class MainController implements Initializable {
     @FXML public void switchChamCong() {loadView("/fxml/ChamCongView.fxml");}
 
     // Khớp với onAction="#logout"
-    @FXML public void logout() {
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Xác nhận");
-        confirm.setHeaderText(null);
-        confirm.setContentText("Bạn có chắc muốn thoát?");
-        confirm.showAndWait().ifPresent(btn -> {
-            if (btn == ButtonType.OK) Platform.exit();
-        });
+    @FXML public void logout(ActionEvent event
+    ) {
+        try {
+            System.out.println("Logout clicked");
+            SessionManager.clearSession();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/scene_login.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // ===================== HELPER =====================

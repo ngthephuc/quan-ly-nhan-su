@@ -32,8 +32,8 @@ public class ProjectController {
     @FXML private DatePicker DateStartProject, DateEndProject;
 
     // --- Form Nhân viên trong Dự Án (TextField) ---
-    @FXML private TextField IDEmployeeProject, IDProjectEmployee, EmployeePost;
-
+//    @FXML private TextField IDEmployeeProject, IDProjectEmployee, EmployeePost;
+    @FXML private TextField IDEmployeeProject, IDProjectEmployee;
     private final DuAnService duAnService = new DuAnService();
     private final ThamGiaService thamGiaService = new ThamGiaService();
 
@@ -108,25 +108,25 @@ public class ProjectController {
     }
 
     // 5. Sửa thông tin nhân viên trong dự án (FIX LỖI DÒNG 56 ÔNG VỪA BÁO)
-    @FXML void editProjectEmployee(ActionEvent event) {
-        String maNV = IDEmployeeProject.getText();
-        String maDA = IDProjectEmployee.getText();
-        String vaiTroMoi = EmployeePost.getText();
-
-        if (maNV.isEmpty() || maDA.isEmpty()) {
-            hienThongBao("Lỗi", "Vui lòng nhập Mã NV và Mã DA để sửa!");
-            return;
-        }
-
-        try {
-            // GỌI SERVICE THẬT CHỨ KHÔNG HIỆN THÔNG BÁO TÀO LAO NỮA
-            thamGiaService.capNhatVaiTro(maNV, maDA, vaiTroMoi);
-            loadData(); // Load lại bảng để cập nhật dữ liệu
-            hienThongBao("Thành công", "Đã cập nhật chức vụ mới cho nhân viên " + maNV);
-        } catch (Exception e) {
-            hienThongBao("Lỗi", e.getMessage());
-        }
-    }
+//    @FXML void editProjectEmployee(ActionEvent event) {
+//        String maNV = IDEmployeeProject.getText();
+//        String maDA = IDProjectEmployee.getText();
+//        String vaiTroMoi = EmployeePost.getText();
+//
+//        if (maNV.isEmpty() || maDA.isEmpty()) {
+//            hienThongBao("Lỗi", "Vui lòng nhập Mã NV và Mã DA để sửa!");
+//            return;
+//        }
+//
+//        try {
+//            // GỌI SERVICE THẬT CHỨ KHÔNG HIỆN THÔNG BÁO TÀO LAO NỮA
+//            thamGiaService.capNhatVaiTro(maNV, maDA, vaiTroMoi);
+//            loadData(); // Load lại bảng để cập nhật dữ liệu
+//            hienThongBao("Thành công", "Đã cập nhật chức vụ mới cho nhân viên " + maNV);
+//        } catch (Exception e) {
+//            hienThongBao("Lỗi", e.getMessage());
+//        }
+//    }
 
     // 6. Xóa nhân viên khỏi dự án
     @FXML void deleteProjectEmployee(ActionEvent event) {
@@ -158,7 +158,7 @@ public class ProjectController {
 
                 // Xóa trắng các ô nhập liệu sau khi xóa xong cho sạch
                 IDEmployeeProject.clear();
-                EmployeePost.clear();
+//                EmployeePost.clear();
 
             } catch (Exception e) {
                 // Nếu xóa lỗi (ví dụ không tìm thấy bản ghi) thì báo ở đây
@@ -195,7 +195,9 @@ public class ProjectController {
         NhanVien nv = new NhanVien(); nv.setMaNV(IDEmployeeProject.getText());
         Du_An da = new Du_An(); da.setMaDA(IDProjectEmployee.getText());
         tg.setNhanVien(nv); tg.setDuAn(da);
-        tg.setVaiTro(EmployeePost.getText()); tg.setSoGio(0);
+//        tg.setVaiTro(EmployeePost.getText());
+        tg.setVaiTro("");
+        tg.setSoGio(0);
         return tg;
     }
 

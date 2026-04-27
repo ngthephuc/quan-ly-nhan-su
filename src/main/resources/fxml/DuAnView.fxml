@@ -28,20 +28,20 @@
                                 <String fx:value="white-bg" />
                             </styleClass>
                             <children>
-                                <TextField fx:id="IDEmployeeProject" layoutX="122.0" layoutY="394.0" prefHeight="25.0" prefWidth="137.0" />
-                                <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="397.0" prefHeight="18.0" prefWidth="102.0" text="Mã Nhân Viên:">
+                                <TextField fx:id="IDEmployeeProject" layoutX="122.0" layoutY="422.0" prefHeight="25.0" prefWidth="137.0" />
+                                <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="425.0" prefHeight="18.0" prefWidth="102.0" text="Mã Nhân Viên:">
                                     <font>
                                         <Font name="Tahoma" size="14.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="EmployeePost" layoutX="122.0" layoutY="429.0" prefHeight="25.0" prefWidth="137.0" />
-                                <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="432.0" prefHeight="18.0" prefWidth="102.0" text="Chức Vụ:">
-                                    <font>
-                                        <Font name="Tahoma" size="14.0" />
-                                    </font>
-                                </Label>
-                                <TextField fx:id="IDProjectEmployee" layoutX="122.0" layoutY="464.0" prefHeight="25.0" prefWidth="137.0" />
-                                <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="467.0" prefHeight="18.0" prefWidth="102.0" text="Mã Dự Án:">
+<!--                                <TextField fx:id="EmployeePost" layoutX="122.0" layoutY="429.0" prefHeight="25.0" prefWidth="137.0" />-->
+<!--                                <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="432.0" prefHeight="18.0" prefWidth="102.0" text="Chức Vụ:">-->
+<!--                                    <font>-->
+<!--                                        <Font name="Tahoma" size="14.0" />-->
+<!--                                    </font>-->
+<!--                                </Label>-->
+                                <TextField fx:id="IDProjectEmployee" layoutX="122.0" layoutY="459.0" prefHeight="25.0" prefWidth="137.0" />
+                                <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="462.0" prefHeight="18.0" prefWidth="102.0" text="Mã Dự Án:">
                                     <font>
                                         <Font name="Tahoma" size="14.0" />
                                     </font>
@@ -52,11 +52,11 @@
                                         <Font name="Tahoma" size="14.0" />
                                     </font>
                                 </Label>
-                                <Button layoutX="30.4" layoutY="512.0" mnemonicParsing="false" onAction="#addProjectEmployee" prefHeight="40.0" prefWidth="60.0" text="Thêm" AnchorPane.leftAnchor="30.4" />
-                                <Button layoutX="107.0" layoutY="512.0" mnemonicParsing="false" onAction="#editProjectEmployee" prefHeight="40.0" prefWidth="60.0" text="Sửa" />
-                                <Button layoutX="182.40000000000006" layoutY="512.0" mnemonicParsing="false" onAction="#deleteProjectEmployee" prefHeight="40.0" prefWidth="60.0" text="Xóa" AnchorPane.rightAnchor="30.400000000000006" />
-                                <Line endX="129.0" layoutX="122.0" layoutY="381.0" startX="-100.0" stroke="#2e7d32" strokeWidth="2.0" />
-                                <Label layoutX="22.0" layoutY="346.0" text="Nhân Viên">
+                                <Button layoutX="30.4" layoutY="507.0" mnemonicParsing="false" onAction="#addProjectEmployee" prefHeight="40.0" prefWidth="100.0" text="Thêm" AnchorPane.leftAnchor="30.4" />
+<!--                                <Button layoutX="107.0" layoutY="512.0" mnemonicParsing="false" onAction="#editProjectEmployee" prefHeight="40.0" prefWidth="60.0" text="Sửa" />-->
+                                <Button layoutX="142.40000000000006" layoutY="507.0" mnemonicParsing="false" onAction="#deleteProjectEmployee" prefHeight="40.0" prefWidth="100.0" text="Xóa" AnchorPane.rightAnchor="30.400000000000006" />
+                                <Line endX="129.0" layoutX="122.0" layoutY="409.0" startX="-100.0" stroke="#2e7d32" strokeWidth="2.0" />
+                                <Label layoutX="22.0" layoutY="374.0" text="Nhân Viên">
                                     <font>
                                         <Font name="System Bold" size="24.0" />
                                     </font>
